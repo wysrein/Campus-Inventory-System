@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Student Registration - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="form-container">
+
+        <div class="back-arrow">
+
+            <a
+                href="{{ url_for('index') }}"
+                aria-label="Back to account selection"
+                title="Back to account selection"
+            >
+                ←
+            </a>
+
+        </div>
+
+
+        <h1>Student Registration</h1>
+
+        <p>
+            Create your Campus Hardware Inventory student account.
+        </p>
+
+
+        <form method="POST" action="{{ url_for('register') }}">
+
+            <div class="form-group">
+
+                <label for="full_name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    required
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autocomplete="username"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="student_number">
+                    Student Number
+                </label>
+
+                <input
+                    type="text"
+                    id="student_number"
+                    name="student_number"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="year_level">
+                    Year Level
+                </label>
+
+                <select
+                    id="year_level"
+                    name="year_level"
+                    required
+                >
+
+                    <option value="">
+                        Select Year Level
+                    </option>
+
+                    <option value="1st Year">
+                        1st Year
+                    </option>
+
+                    <option value="2nd Year">
+                        2nd Year
+                    </option>
+
+                    <option value="3rd Year">
+                        3rd Year
+                    </option>
+
+                    <option value="4th Year">
+                        4th Year
+                    </option>
+
+                    <option value="5th Year">
+                        5th Year
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="program">
+                    Program
+                </label>
+
+                <input
+                    type="text"
+                    id="program"
+                    name="program"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    onclick="togglePassword('password')"
+                >
+                    Show password
+                </button>
+
+            </div>
+
+
+            <button type="submit" class="btn">
+                Complete Registration
+            </button>
+
+        </form>
+
+
+        <div class="form-links">
+
+            <p>
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Back to Student Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

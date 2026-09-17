@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}Borrow History - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="student-portal">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="student-sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-title">
+                CAMPUS<br>
+                HARDWARE
+            </div>
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <!-- DASHBOARD -->
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- EQUIPMENT INVENTORY -->
+            <a
+                href="{{ url_for('catalog') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▤</span>
+                <span>Equipment Inventory</span>
+            </a>
+
+
+            <!-- BORROW HISTORY - ACTIVE -->
+            <a
+                href="{{ url_for('borrow_history') }}"
+                class="sidebar-link active"
+            >
+                <span class="sidebar-icon">▥</span>
+                <span>Borrow History</span>
+            </a>
+
+            <!-- ACTIVE HOLDS -->
+            <a
+                href="{{ url_for('active_holds') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">◷</span>
+                <span>Active Holds</span>
+            </a>
+
+            <!-- REQUEST HISTORY -->
+            <a 
+                href="{{ url_for('request_history') }}" 
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">▤</span>
+                <span>Request History</span>
+            </a>
+                    </nav>
+                     <div class="sidebar-bottom">
+                        <div class="sidebar-separator"></div>
+
+                        <a href="{{ url_for('profile') }}" class="sidebar-account">
+                            My Account &amp; Security
+                        </a>
+
+                        <a href="{{ url_for('logout') }}" class="sidebar-logout">
+                            Logout
+                        </a>
+                    </div>
+
+                </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="student-main">
+
+        <!-- HEADER WITH PADDING TO LOWER THE TEXT SLIGHTLY -->
+        <div class="student-topbar" style="display: block; width: 100%; margin-bottom: 25px; padding-top: 25px;">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #002b66;">Borrow History</h1>
+            <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">List of your borrows</p>
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="hardware-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Borrow Status</th>
+                        <th>Return Status</th>
+                        <th>Borrowed At</th>
+                        <th>Returned At</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for record in history %}
+
+                    <tr>
+
+                        <td>
+                            {{ record.item_name }}
+                        </td>
+
+                        <td>
+                            {{ record.quantity }}
+                        </td>
+
+                        <td>
+                            {{ record.borrow_status }}
+                        </td>
+
+                        <td>
+                            {{ record.return_status }}
+                        </td>
+
+                        <td>
+                            {{ record.borrowed_at }}
+                        </td>
+
+                        <td>
+                            {{ record.returned_at or '-' }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+                            No borrow history found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- YELLOW ACCENT SA TAAS NG TABLE -->
+<style>
+.table-container {
+    border-top: 4px solid #f4c300 !important;
+}
+</style>
+
+{% endblock %}

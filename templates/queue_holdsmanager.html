@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+{% block title %}Queue &amp; Holds Manager - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="student-layout admin-borrows-layout">
+
+    <!-- ADMIN SIDEBAR -->
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-title">
+                CAMPUS<br>
+                HARDWARE
+            </div>
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('admin_equipment') }}" class="sidebar-link">
+                <span class="sidebar-icon">▤</span>
+                <span>Equipments</span>
+            </a>
+
+            <a href="{{ url_for('admin_borrows') }}" class="sidebar-link">
+                <span class="sidebar-icon">▥</span>
+                <span>Borrows / Return</span>
+            </a>
+
+            <a href="{{ url_for('queue_holds_manager') }}" class="sidebar-link active">
+                <span class="sidebar-icon">◷</span>
+                <span>Queue &amp; Holds Manager</span>
+            </a>
+
+            <a href="{{ url_for('admin_item_requests') }}" class="sidebar-link">
+                <span class="sidebar-icon">▤</span>
+                <span>Item Requests</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('admin_approvals') }}" class="sidebar-account">
+                Admin Approvals
+            </a>
+            <a href="{{ url_for('logout') }}" class="sidebar-logout">
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="student-main">
+
+        <section class="student-content">
+
+            <div class="student-panel admin-borrows-panel">
+
+                <!-- PANEL HEADER -->
+                <div class="panel-header">
+                    <div>
+                        <h2>Queue &amp; Holds Manager</h2>
+                        <p>Select holds below and update their pickup status.</p>
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <form method="POST" action="{{ url_for('queue_holds_manager') }}" id="holds-form">
+
+                    <div class="table-wrapper">
+                        <table class="equipment-table">
+
+                            <thead>
+                                <tr>
+                                    <th style="width: 44px; text-align: center;">
+                                        <input
+                                            type="checkbox"
+                                            id="select-all"
+                                            title="Select all"
+                                            style="width:16px;height:16px;accent-color:#f4c300;cursor:pointer;"
+                                        >
+                                    </th>
+                                    <th>Queue #</th>
+                                    <th>Hold ID</th>
+                                    <th>Student</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+                                    <th>Hold Date</th>
+                                    <th>Pickup Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% if holds %}
+
+                                    {% for hold in holds %}
+                                    <tr class="holds-row" style="cursor:pointer; transition: background 0.15s;">
+
+                                        <td style="text-align: center;">
+                                            <input
+                                                type="checkbox"
+                                                name="hold_ids"
+                                                value="{{ hold.hold_id }}"
+                                                class="hold-checkbox"
+                                                style="width:16px;height:16px;accent-color:#002D72;cursor:pointer;"
+                                            >
+                                        </td>
+
+                                        <td><strong>{{ hold.queue_position }}</strong></td>
+                                        <td>{{ hold.hold_id }}</td>
+                                        <td>{{ hold.username }}</td>
+                                        <td>{{ hold.item_name }}</td>
+                                        <td>{{ hold.quantity }}</td>
+                                        <td>{{ hold.hold_date }}</td>
+
+                                        <td>
+                                            {% if hold.pickup_status == 'Ready for Pickup' %}
+                                                <span class="status-badge" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;">
+                                                    Ready for Pickup
+                                                </span>
+                                            {% elif hold.pickup_status == 'Claimed' %}
+                                                <span class="status-badge status-in-stock">
+                                                    Claimed
+                                                </span>
+                                            {% else %}
+                                                <span class="status-badge status-low-stock">
+                                                    {{ hold.pickup_status }}
+                                                </span>
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <tr>
+                                        <td colspan="8" class="empty-state" style="text-align:center;padding:30px;color:#64748b;">
+                                            No pending holds in the queue.
+                                        </td>
+                                    </tr>
+
+                                {% endif %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="holds-action-bar">
+
+                        <span class="holds-selected-label" id="selected-count">
+                            0 selected
+                        </span>
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="ready_for_pickup"
+                            class="holds-btn holds-btn-pickup"
+                        >
+                            ✓&nbsp; Set Status: Ready for Pickup
+                        </button>
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="claimed"
+                            class="holds-btn holds-btn-claimed"
+                        >
+                            ★&nbsp; Set Status: Claimed
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<style>
+
+/* =============================================
+   HOLDS ACTION BAR
+   ============================================= */
+
+.holds-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.holds-selected-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    min-width: 80px;
+}
+
+
+/* =============================================
+   SHARED BUTTON BASE
+   ============================================= */
+
+.holds-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 11px 22px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.holds-btn:hover {
+    transform: translateY(-2px);
+}
+
+.holds-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =============================================
+   READY FOR PICKUP  –  sky blue
+   ============================================= */
+
+.holds-btn-pickup {
+    background: #0ea5e9;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(14, 165, 233, 0.30);
+}
+
+.holds-btn-pickup:hover {
+    background: #0284c7;
+    box-shadow: 0 5px 14px rgba(14, 165, 233, 0.40);
+}
+
+
+/* =============================================
+   CLAIMED  –  NU gold
+   ============================================= */
+
+.holds-btn-claimed {
+    background: #F4C300;
+    color: #001F4D;
+    box-shadow: 0 3px 10px rgba(244, 195, 0, 0.35);
+}
+
+.holds-btn-claimed:hover {
+    background: #d4a900;
+    box-shadow: 0 5px 14px rgba(244, 195, 0, 0.45);
+}
+
+
+/* =============================================
+   ROW SELECTED HIGHLIGHT
+   ============================================= */
+
+.holds-row.row-selected td {
+    background: #EAF1FA !important;
+}
+
+</style>
+
+
+<script>
+
+/* =============================================
+   SELECT ALL CHECKBOX
+   ============================================= */
+
+const selectAll   = document.getElementById('select-all');
+const checkboxes  = document.querySelectorAll('.hold-checkbox');
+const countLabel  = document.getElementById('selected-count');
+
+function updateCount() {
+    const n = document.querySelectorAll('.hold-checkbox:checked').length;
+    countLabel.textContent = n + ' selected';
+}
+
+selectAll.addEventListener('change', function () {
+    checkboxes.forEach(function (cb) {
+        cb.checked = selectAll.checked;
+        cb.closest('tr').classList.toggle('row-selected', selectAll.checked);
+    });
+    updateCount();
+});
+
+checkboxes.forEach(function (cb) {
+    cb.addEventListener('change', function () {
+        cb.closest('tr').classList.toggle('row-selected', cb.checked);
+
+        // Sync the "select all" header checkbox state
+        const all     = checkboxes.length;
+        const checked = document.querySelectorAll('.hold-checkbox:checked').length;
+        selectAll.indeterminate = checked > 0 && checked < all;
+        selectAll.checked       = checked === all;
+
+        updateCount();
+    });
+});
+
+
+/* =============================================
+   CLICKING THE ROW ALSO TOGGLES CHECKBOX
+   ============================================= */
+
+document.querySelectorAll('.holds-row').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+        // Don't double-fire when clicking directly on the checkbox
+        if (e.target.type === 'checkbox') return;
+
+        const cb = row.querySelector('.hold-checkbox');
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event('change'));
+    });
+});
+
+
+/* =============================================
+   CONFIRM BEFORE SUBMIT
+   ============================================= */
+
+document.getElementById('holds-form').addEventListener('submit', function (e) {
+    const checked = document.querySelectorAll('.hold-checkbox:checked').length;
+
+    if (checked === 0) {
+        e.preventDefault();
+        alert('Please select at least one hold before updating the status.');
+        return;
+    }
+
+    const action = e.submitter ? e.submitter.value : '';
+    const label  = action === 'claimed' ? 'Claimed' : 'Ready for Pickup';
+
+    if (!confirm('Set ' + checked + ' hold(s) to "' + label + '"?')) {
+        e.preventDefault();
+    }
+});
+
+</script>
+
+{% endblock %}

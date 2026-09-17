@@ -1,0 +1,1166 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+    {% if role == "Administrator" %}
+
+        Admin Dashboard - Campus Hardware Inventory
+
+    {% else %}
+
+        Student Dashboard - Campus Hardware Inventory
+
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="student-portal">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-brand-title">
+
+                CAMPUS<br>
+                HARDWARE
+
+            </div>
+
+            <div class="sidebar-brand-subtitle">
+
+                Laboratory Inventory
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <!-- INVENTORY -->
+
+            <a
+                href="{% if role == 'Administrator' %}{{ url_for('admin_equipment') }}{% else %}{{ url_for('catalog') }}{% endif %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">▤</span>
+
+                {% if role == "Administrator" %}
+
+                    <span>Equipments</span>
+
+                {% else %}
+
+                    <span>Equipment Inventory</span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- BORROW HISTORY -->
+
+            <a
+                href="{% if role == 'Administrator' %}{{ url_for('admin_borrows') }}{% else %}{{ url_for('borrow_history') }}{% endif %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">▥</span>
+
+                {% if role == "Administrator" %}
+
+                    <span>Borrows / Return</span>
+
+                {% else %}
+
+                    <span>Borrow History</span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- ACTIVE HOLDS -->
+
+            <a
+                href="{% if role == 'Administrator' %}{{ url_for('queue_holds_manager') }}{% else %}{{ url_for('active_holds') }}{% endif %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">◷</span>
+
+                {% if role == "Administrator" %}
+
+                    <span>Queue &amp; Holds Manager</span>
+
+                {% else %}
+
+                    <span>Active Holds</span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- REQUEST HISTORY -->
+
+            <a
+                href="{%if role == 'Administrator' %}{{url_for('admin_item_requests') }} {% else %}{{url_for('request_history') }}{% endif %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">▤</span>
+
+                {% if role == "Administrator" %}
+
+                    <span>Item Requests</span>
+
+                {% else %}
+
+                    <span>Request History</span>
+
+                {% endif %}
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-separator"></div>
+
+            <a
+                href="{% if role == 'Administrator' %}{{ url_for('admin_approvals') }}{% else %}{{ url_for('profile') }}{% endif %}"
+                class="sidebar-account"
+            >
+
+                {% if role == "Administrator" %}
+
+                    Admin Approvals
+
+                {% else %}
+
+                    My Account &amp; Security
+
+                {% endif %}
+
+            </a>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="sidebar-logout"
+            >
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="student-main">
+
+
+        <!-- =================================================
+             TOP BAR
+             ================================================= -->
+
+        <header class="student-topbar">
+
+            <div class="student-page-title">
+
+                <h1>
+
+                    {% if role == "Administrator" %}
+
+                        Admin Dashboard
+
+                    {% else %}
+
+                        Student Dashboard
+
+                    {% endif %}
+
+                </h1>
+
+                <p>
+
+                    {% if role == "Administrator" %}
+
+                        Admin Portal
+
+                    {% else %}
+
+                        Student Portal
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+            <!-- USER PROFILE -->
+
+            <div class="student-user">
+
+                <div class="student-user-avatar">
+
+                    {% if full_name %}
+
+                        {{ full_name[0]|upper }}
+
+                    {% else %}
+
+                        {{ username[0]|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="student-user-details">
+
+                    <strong>
+
+                        {{ full_name|default(username) }}
+
+                    </strong>
+
+                    <span>
+
+                        {% if role == "Administrator" %}
+
+                            Administrator
+
+                        {% else %}
+
+                            Student
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             WELCOME CARD
+             ================================================= -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-avatar">
+
+                {% if full_name %}
+
+                    {{ full_name[0]|upper }}
+
+                {% else %}
+
+                    {{ username[0]|upper }}
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="welcome-text">
+
+                <div class="welcome-label">
+
+                    WELCOME BACK
+
+                </div>
+
+
+                <h2>
+
+                    Welcome, {{ full_name|default(username) }}!
+
+                </h2>
+
+
+                <!-- USER INFORMATION -->
+
+                <div class="student-info">
+
+                    {% if role == "Administrator" %}
+
+                        <span>
+
+                            <strong>Employee ID Number:</strong>
+
+                            {{ employee_id|default("Not available") }}
+
+                        </span>
+
+                        <span>
+
+                            <strong>Building:</strong>
+
+                            {{ building|default("Not available") }}
+
+                        </span>
+
+                        <span>
+
+                            <strong>Laboratory Room:</strong>
+
+                            {{ laboratory_room|default("Not available") }}
+
+                        </span>
+
+                    {% else %}
+
+                        <span>
+
+                            <strong>Student Number:</strong>
+
+                            {{ student_number|default("Not available") }}
+
+                        </span>
+
+                        <span>
+
+                            <strong>Year Level:</strong>
+
+                            {{ year_level|default("Not available") }}
+
+                        </span>
+
+                        <span>
+
+                            <strong>Program:</strong>
+
+                            {{ program|default("Not available") }}
+
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <p>
+
+                    {% if role == "Administrator" %}
+
+                        Manage laboratory equipment,
+                        borrow and return approvals,
+                        queue requests, and item requests
+                        from your Admin Portal.
+
+                    {% else %}
+
+                        Manage your equipment borrowing,
+                        reservations, and account information
+                        from your Student Portal.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+             ================================================= -->
+
+        <section class="portal-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+
+                        Quick Actions
+
+                    </h2>
+
+                    <p>
+
+                        Access your most commonly used functions.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions-grid">
+
+
+                <!-- EQUIPMENTS -->
+
+                <a
+                    href="{% if role == 'Administrator' %}{{ url_for('admin_equipment') }}{% else %}{{ url_for('catalog') }}{% endif %}"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+
+                        ▤
+
+                    </div>
+
+
+                    <div class="quick-action-content">
+
+                        <h3>
+
+                            {% if role == "Administrator" %}
+
+                                Equipments
+
+                            {% else %}
+
+                                Find Equipments
+
+                            {% endif %}
+
+                        </h3>
+
+
+                        <p>
+
+                            {% if role == "Administrator" %}
+
+                                View and manage laboratory equipment.
+
+                            {% else %}
+
+                                Browse available laboratory hardware.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="quick-action-arrow">
+
+                        →
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- BORROWS / RETURN -->
+
+                <a
+                    href="{% if role == 'Administrator' %}{{ url_for('admin_borrows') }}{% else %}{{ url_for('borrow_history') }}{% endif %}"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+
+                        ↔
+
+                    </div>
+
+
+                    <div class="quick-action-content">
+
+                        <h3>
+
+                            {% if role == "Administrator" %}
+
+                                Borrows / Return
+
+                            {% else %}
+
+                                My Borrows / Return
+
+                            {% endif %}
+
+                        </h3>
+
+
+                        <p>
+
+                            {% if role == "Administrator" %}
+
+                                View current borrowing and return activity.
+
+                            {% else %}
+
+                                View and manage your borrowed equipment.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="quick-action-arrow">
+
+                        →
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- QUEUE & HOLDS -->
+
+                <a
+                    href="{% if role == 'Administrator' %}{{ url_for('queue_holds_manager') }}{% else %}{{ url_for('active_holds') }}{% endif %}"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+
+                        ◷
+
+                    </div>
+
+
+                    <div class="quick-action-content">
+
+                        <h3>
+
+                            {% if role == "Administrator" %}
+
+                                Queue &amp; Holds Manager
+
+                            {% else %}
+
+                                My Active Holds
+
+                            {% endif %}
+
+                        </h3>
+
+
+                        <p>
+
+                            {% if role == "Administrator" %}
+
+                                Manage pending holds and queue activity.
+
+                            {% else %}
+
+                                View your active holds and queue positions.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="quick-action-arrow">
+
+                        →
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- ITEM REQUESTS -->
+
+                <a
+                    href="{% if role == 'Administrator' %}{{ url_for('admin_item_requests') }}{% else %}{{ url_for('request_history') }}{% endif %}"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+
+                        +
+
+                    </div>
+
+
+                    <div class="quick-action-content">
+
+                        <h3>
+
+                            {% if role == "Administrator" %}
+
+                                Item Requests
+
+                            {% else %}
+
+                                Request Item
+
+                            {% endif %}
+
+                        </h3>
+
+
+                        <p>
+
+                            {% if role == "Administrator" %}
+
+                                Review hardware requests submitted by students.
+
+                            {% else %}
+
+                                Request hardware that is not currently available.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="quick-action-arrow">
+
+                        →
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EQUIPMENT STATUS
+             ================================================= -->
+
+        <section class="portal-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+
+                        {% if role == "Administrator" %}
+
+                            Equipment Status
+
+                        {% else %}
+
+                            Your Equipment Status
+
+                        {% endif %}
+
+                    </h2>
+
+
+                    <p>
+
+                        {% if role == "Administrator" %}
+
+                            Overview of current laboratory equipment activity.
+
+                        {% else %}
+
+                            Overview of your current equipment activity.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="status-grid">
+
+
+                <!-- ACTIVE BORROW -->
+
+                <div class="status-card">
+
+                    <div class="status-card-header">
+
+                        <span>
+
+                            Active Borrow
+
+                        </span>
+
+
+                        <div class="status-card-icon">
+
+                            ✓
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-number">
+
+                        {% if role == "Administrator" %}
+
+                            {{ active_borrowers|default(0) }}
+
+                        {% else %}
+
+                            {{ borrowed_items|default(0) }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p>
+
+                        {% if role == "Administrator" %}
+
+                            Students currently borrowing items
+
+                        {% else %}
+
+                            Currently borrowed items
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- HOLDS -->
+
+                <div class="status-card">
+
+                    <div class="status-card-header">
+
+                        <span>
+
+                            {% if role == "Administrator" %}
+
+                                Pending Holds
+
+                            {% else %}
+
+                                My Active Holds
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <div class="status-card-icon">
+
+                            ◷
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-number">
+
+                        {% if role == "Administrator" %}
+
+                            {{ pending_holds|default(0) }}
+
+                        {% else %}
+
+                            {{ active_holds|default(0) }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p>
+
+                        {% if role == "Administrator" %}
+
+                            Holds waiting for approval
+
+                        {% else %}
+
+                            Your currently active item holds
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- PENDING REQUESTS -->
+
+                <div class="status-card">
+
+                    <div class="status-card-header">
+
+                        <span>
+
+                            {% if role == "Administrator" %}
+
+                                Pending Requests
+
+                            {% else %}
+
+                                Pending Request
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <div class="status-card-icon">
+
+                            ◉
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-number">
+
+                        {% if role == "Administrator" %}
+
+                            {{ pending_item_requests|default(0) }}
+
+                        {% else %}
+
+                            {{ pending_requests|default(0) }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p>
+
+                        Item requests waiting for approval
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ACTIVE BORROWS
+             ================================================= -->
+
+        <section class="portal-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+
+                        {% if role == "Administrator" %}
+
+                            Active Borrows
+
+                        {% else %}
+
+                            My Active Borrows
+
+                        {% endif %}
+
+                    </h2>
+
+
+                    <p>
+
+                        {% if role == "Administrator" %}
+
+                            Students currently borrowing laboratory equipment.
+
+                        {% else %}
+
+                            Equipment currently assigned to your account.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{% if role == 'Administrator' %}{{ url_for('admin_borrows') }}{% else %}{{ url_for('borrow_history') }}{% endif %}"
+                    class="section-action"
+                >
+
+                    View Equipment
+
+                </a>
+
+            </div>
+
+
+            <div class="borrow-summary-box">
+
+
+                {% if role == "Administrator" %}
+
+
+                    {% if admin_active_borrows %}
+
+                        <div class="borrow-summary-content">
+
+                            <div class="borrow-summary-number">
+
+                                {{ active_borrowers }}
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+
+                                    Students Currently Borrowing
+
+                                </h3>
+
+
+                                <p>
+
+                                    There are {{ active_borrowers }}
+                                    student{% if active_borrowers != 1 %}s{% endif %}
+                                    currently borrowing equipment.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-borrow-table-wrapper">
+
+                            <table class="equipment-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Username</th>
+                                        <th>Item Name</th>
+                                        <th>Qty</th>
+                                        <th>Borrowed At</th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% for borrow in admin_active_borrows %}
+
+                                    <tr>
+
+                                        <td>
+                                            {{ borrow.username }}
+                                        </td>
+
+                                        <td>
+                                            {{ borrow.item_name }}
+                                        </td>
+
+                                        <td>
+                                            {{ borrow.quantity }}
+                                        </td>
+
+                                        <td>
+                                            {{ borrow.borrowed_at }}
+                                        </td>
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                    {% else %}
+
+                        <div class="empty-dashboard">
+
+                            <div class="empty-icon">
+
+                                ✓
+
+                            </div>
+
+
+                            <h3>
+
+                                No Active Borrows
+
+                            </h3>
+
+
+                            <p>
+
+                                No students are currently borrowing equipment.
+
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+
+                {% else %}
+
+
+                    {% if borrowed_items and borrowed_items > 0 %}
+
+                        <div class="borrow-summary-content">
+
+                            <div class="borrow-summary-number">
+
+                                {{ borrowed_items }}
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+
+                                    Active Borrowed Equipment
+
+                                </h3>
+
+
+                                <p>
+
+                                    You currently have
+                                    {{ borrowed_items }}
+                                    borrowed item{% if borrowed_items != 1 %}s{% endif %}.
+
+                                </p>
+
+
+                                <a
+                                    href="{{ url_for('borrow_history') }}"
+                                    class="primary-portal-btn"
+                                >
+
+                                    View My Borrows
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                    {% else %}
+
+                        <div class="empty-dashboard">
+
+                            <div class="empty-icon">
+
+                                ✓
+
+                            </div>
+
+
+                            <h3>
+
+                                No Active Borrows
+
+                            </h3>
+
+
+                            <p>
+
+                                You currently have no borrowed equipment.
+
+                            </p>
+
+
+                            <a
+                                href="{{ url_for('catalog') }}"
+                                class="primary-portal-btn"
+                            >
+
+                                Find Equipment
+
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

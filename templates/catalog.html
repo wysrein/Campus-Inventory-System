@@ -1,0 +1,1493 @@
+{% extends "base.html" %}
+
+{% block title %}Equipment Inventory - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="student-portal">
+
+    <!-- =====================================================
+         STUDENT SIDEBAR
+         ===================================================== -->
+
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-brand-title">
+                CAMPUS HARDWARE
+            </div>
+
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <!-- DASHBOARD -->
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- EQUIPMENT INVENTORY -->
+            <a
+                href="{{ url_for('catalog') }}"
+                class="sidebar-link active"
+            >
+                <span class="sidebar-icon">▤</span>
+                <span>Equipment Inventory</span>
+            </a>
+
+
+            <!-- BORROW HISTORY -->
+            <a
+                href="{{ url_for('borrow_history') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▥</span>
+                <span>Borrow History</span>
+            </a>
+
+
+            <!-- ACTIVE HOLDS -->
+            <a
+                href="{{ url_for('active_holds') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">◷</span>
+                <span>Active Holds</span>
+            </a>
+
+
+            <!-- REQUEST HISTORY -->
+            <a
+                href="{{ url_for('request_history') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▤</span>
+                <span>Request History</span>
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-separator"></div>
+
+            <a
+                href="{{ url_for('profile') }}"
+                class="sidebar-account"
+            >
+                My Account &amp; Security
+            </a>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="sidebar-logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="student-main">
+
+        <!-- =================================================
+             TOP BAR
+             ================================================= -->
+
+        <div class="student-topbar">
+
+            <div class="student-page-title">
+
+                <h1>
+                    Equipment Inventory
+                </h1>
+
+                <p>
+                    Browse available campus laboratory equipment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             EQUIPMENT PAGE
+             ================================================= -->
+
+        <div class="equipment-page">
+
+            <div class="equipment-layout">
+
+
+                <!-- =================================================
+                     LEFT SIDE
+                     ================================================= -->
+
+                <aside class="equipment-left-column">
+
+
+                    <!-- =================================================
+                         LAB BORROWING PANEL
+                         ================================================= -->
+
+                    <div class="lab-borrow-panel">
+
+                        <div class="borrow-panel-title">
+                            Lab Borrowing Panel
+                        </div>
+
+
+                        <!-- SELECTED ITEM -->
+
+                        <div class="borrow-field">
+
+                            <label>
+                                Selected Item:
+                            </label>
+
+                            <div
+                                id="selected-item-display"
+                                class="selected-item-display"
+                            >
+                                None selected
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="borrow-field">
+
+                            <label for="borrow-quantity">
+                                Quantity to Borrow
+                            </label>
+
+                            <input
+                                type="number"
+                                id="borrow-quantity"
+                                min="1"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <!-- BORROW FORM -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('borrow_item') }}"
+                            id="borrow-form"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="item_id"
+                                id="selected-item-id"
+                                value=""
+                            >
+
+                            <input
+                                type="hidden"
+                                name="quantity"
+                                id="selected-quantity"
+                                value="1"
+                            >
+
+                            <button
+                                type="submit"
+                                class="borrow-action-btn primary-borrow-btn"
+                                id="borrow-button"
+                                disabled
+                            >
+                                Check-out / Borrow Item
+                            </button>
+
+                        </form>
+
+
+                        <!-- PLACE HOLD -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('place_hold') }}"
+                            id="hold-form"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="item_id"
+                                id="hold-item-id"
+                                value=""
+                            >
+
+                            <input
+                                type="hidden"
+                                name="quantity"
+                                id="hold-quantity"
+                                value="1"
+                            >
+
+                            <button
+                                type="submit"
+                                class="borrow-action-btn hold-btn"
+                                id="hold-button"
+                                disabled
+                            >
+                                Place Item Hold
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TOTAL STOCK
+                         ================================================= -->
+
+                    <div class="total-stock-card">
+
+                        <div class="total-stock-icon">
+                            ▤
+                        </div>
+
+                        <div class="total-stock-content">
+
+                            <span class="total-stock-label">
+                                Total Stock
+                            </span>
+
+                            <strong class="total-stock-number">
+                                {{
+                                    (items | sum(attribute='quantity'))
+                                    +
+                                    (items | sum(attribute='borrowed_quantity'))
+                                }}
+                            </strong>
+
+                            <span class="total-stock-description">
+                                Total physical units in inventory
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+
+                <!-- =================================================
+                     RIGHT SIDE
+                     ================================================= -->
+
+                <section class="equipment-inventory">
+
+
+                    <!-- =================================================
+                         SEARCH / FILTER / LEGEND BAR
+                         ================================================= -->
+
+                    <div class="equipment-toolbar">
+
+
+                        <!-- SEARCH + CATEGORY -->
+
+                        <form
+                            method="GET"
+                            action="{{ url_for('catalog') }}"
+                            class="equipment-search-form"
+                        >
+
+
+                            <!-- SEARCH -->
+
+                            <div class="search-group">
+
+                                <label for="equipment-search">
+                                    Search:
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="equipment-search"
+                                    name="search"
+                                    placeholder="Search hardware..."
+                                    value="{{ search or '' }}"
+                                >
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="category-group">
+
+                                <label for="category-filter">
+                                    Category Filter:
+                                </label>
+
+                                <select
+                                    id="category-filter"
+                                    name="category"
+                                >
+
+                                    <option value="">
+                                        All
+                                    </option>
+
+                                    {% for category in categories %}
+
+                                        <option
+                                            value="{{ category }}"
+                                            {% if selected_category == category %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            {{ category }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- SEARCH BUTTON -->
+
+                            <button
+                                type="submit"
+                                class="filter-btn"
+                            >
+                                Search
+                            </button>
+
+
+                            <!-- RESET -->
+
+                            <a
+                                href="{{ url_for('catalog') }}"
+                                class="reset-filter-btn"
+                            >
+                                Reset Filters
+                            </a>
+
+                        </form>
+
+
+                        <!-- =================================================
+                             LEGEND
+                             ================================================= -->
+
+                        <div class="stock-legend">
+
+                            <span class="legend-title">
+                                Legend
+                            </span>
+
+
+                            <span class="legend-item">
+
+                                <span
+                                    class="legend-dot legend-green"
+                                ></span>
+
+                                <span>
+                                    In Stock
+                                </span>
+
+                            </span>
+
+
+                            <span class="legend-item">
+
+                                <span
+                                    class="legend-dot legend-yellow"
+                                ></span>
+
+                                <span>
+                                    Low Stock
+                                </span>
+
+                            </span>
+
+
+                            <span class="legend-item">
+
+                                <span
+                                    class="legend-dot legend-red"
+                                ></span>
+
+                                <span>
+                                    Out of Stock
+                                </span>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         INVENTORY TABLE
+                         ================================================= -->
+
+                    <div class="equipment-table-container">
+
+                        <table class="equipment-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th class="select-column">
+                                        Select
+                                    </th>
+
+                                    <th>
+                                        ID
+                                    </th>
+
+                                    <th>
+                                        Item Name
+                                    </th>
+
+                                    <th>
+                                        Category
+                                    </th>
+
+                                    <th>
+                                        Initial Qty
+                                    </th>
+
+                                    <th>
+                                        Qty
+                                    </th>
+
+                                    <th>
+                                        Borrowed
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for item in items %}
+
+                                <tr
+                                    class="equipment-row"
+                                    data-item-id="{{ item.id }}"
+                                    data-item-name="{{ item.name }}"
+                                    data-quantity="{{ item.quantity }}"
+                                >
+
+
+                                    <!-- SELECT -->
+
+                                    <td class="select-column">
+
+                                        <input
+                                            type="radio"
+                                            name="selected_equipment"
+                                            class="equipment-selector"
+                                            value="{{ item.id }}"
+                                            data-item-id="{{ item.id }}"
+                                            data-item-name="{{ item.name }}"
+                                            data-quantity="{{ item.quantity }}"
+                                        >
+
+                                    </td>
+
+
+                                    <!-- ID -->
+
+                                    <td>
+                                        {{ item.id }}
+                                    </td>
+
+
+                                    <!-- ITEM NAME -->
+
+                                    <td class="item-name-cell">
+                                        {{ item.name }}
+                                    </td>
+
+
+                                    <!-- CATEGORY -->
+
+                                    <td>
+                                        {{ item.category }}
+                                    </td>
+
+
+                                    <!-- INITIAL QTY -->
+
+                                    <td>
+                                        {{ item.initial_quantity }}
+                                    </td>
+
+
+                                    <!-- CURRENT QTY -->
+
+                                    <td>
+                                        {{ item.quantity }}
+                                    </td>
+
+
+                                    <!-- BORROWED -->
+
+                                    <td>
+                                        {{ item.borrowed_quantity }}
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        {% if item.quantity <= 0 %}
+
+                                            <span
+                                                class="status-badge out-of-stock"
+                                            >
+                                                Out of Stock
+                                            </span>
+
+                                        {% elif item.status == "Low Stock" %}
+
+                                            <span
+                                                class="status-badge low-stock"
+                                            >
+                                                Low Stock
+                                            </span>
+
+                                        {% elif item.status == "High Stock" %}
+
+                                            <span
+                                                class="status-badge in-stock"
+                                            >
+                                                In Stock
+                                            </span>
+
+                                        {% else %}
+
+                                            <span
+                                                class="status-badge in-stock"
+                                            >
+                                                {{ item.status }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+
+                                {% else %}
+
+                                <tr>
+
+                                    <td
+                                        colspan="8"
+                                        class="no-items"
+                                    >
+                                        No hardware items found.
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     PAGE-SPECIFIC STYLE
+     ========================================================= -->
+
+<style>
+
+/* =========================================================
+   LEFT COLUMN
+   ========================================================= */
+
+.equipment-left-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+/* =========================================================
+   TOTAL STOCK CARD
+   ========================================================= */
+
+.total-stock-card {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #d6dfeb;
+
+    border-top: 4px solid #F4C300;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 45, 114, 0.08);
+
+}
+
+
+.total-stock-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 42px;
+
+    height: 42px;
+
+    margin-right: 13px;
+
+    background: #EAF1FA;
+
+    border-radius: 8px;
+
+    color: #002D72;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+.total-stock-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.total-stock-label {
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 2px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+
+}
+
+
+.total-stock-number {
+
+    color: #002D72;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+}
+
+
+.total-stock-description {
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.equipment-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #d6dfeb;
+
+    border-top: 4px solid #F4C300;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 45, 114, 0.06);
+
+    flex-wrap: wrap;
+
+}
+
+
+/* =========================================================
+   SEARCH FORM
+   ========================================================= */
+
+.equipment-search-form {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin: 0;
+
+}
+
+
+.search-group,
+.category-group {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.search-group label,
+.category-group label {
+
+    color: #002D72;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+.search-group input,
+.category-group select {
+
+    height: 36px;
+
+    padding: 0 10px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    color: #334155;
+
+    font-size: 12px;
+
+    box-sizing: border-box;
+
+}
+
+
+.search-group input {
+
+    width: 180px;
+
+}
+
+
+.category-group select {
+
+    min-width: 130px;
+
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+   ========================================================= */
+
+.filter-btn {
+
+    height: 36px;
+
+    padding: 0 16px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background: #002D72;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+
+.filter-btn:hover {
+
+    background: #001f4f;
+
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.reset-filter-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 36px;
+
+    padding: 0 12px;
+
+    border-radius: 5px;
+
+    background: #EAF1FA;
+
+    color: #002D72;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+}
+
+
+.reset-filter-btn:hover {
+
+    background: #dce8f7;
+
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.stock-legend {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    padding: 8px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #d6dfeb;
+
+    border-radius: 7px;
+
+    white-space: nowrap;
+
+}
+
+
+.legend-title {
+
+    color: #002D72;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+}
+
+
+.legend-item {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+.legend-dot {
+
+    display: inline-block;
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+}
+
+
+.legend-green {
+
+    background: #16a34a;
+
+}
+
+
+.legend-yellow {
+
+    background: #F4C300;
+
+}
+
+
+.legend-red {
+
+    background: #dc2626;
+
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 5px 10px;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+.status-badge.out-of-stock {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+}
+
+
+.status-badge.in-stock {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+
+}
+
+
+.status-badge.low-stock {
+
+    background: #FFF4C2;
+
+    color: #7A5B00;
+
+    border: 1px solid #F4C300;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .equipment-toolbar {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+    .stock-legend {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        justify-content: flex-start;
+
+        white-space: normal;
+
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .equipment-search-form {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: 100%;
+
+    }
+
+    .search-group,
+    .category-group {
+
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .search-group input,
+    .category-group select {
+
+        width: 100%;
+
+    }
+
+    .filter-btn,
+    .reset-filter-btn {
+
+        width: 100%;
+
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     EQUIPMENT PAGE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const selectors =
+        document.querySelectorAll(".equipment-selector");
+
+
+    const selectedItemDisplay =
+        document.getElementById("selected-item-display");
+
+
+    const selectedItemId =
+        document.getElementById("selected-item-id");
+
+
+    const borrowQuantity =
+        document.getElementById("borrow-quantity");
+
+
+    const selectedQuantity =
+        document.getElementById("selected-quantity");
+
+
+    const borrowButton =
+        document.getElementById("borrow-button");
+
+
+    const holdButton =
+        document.getElementById("hold-button");
+
+
+    const holdItemId =
+        document.getElementById("hold-item-id");
+
+
+    const holdQuantity =
+        document.getElementById("hold-quantity");
+
+
+    /* =====================================================
+       SELECT EQUIPMENT
+       ===================================================== */
+
+    selectors.forEach(function (selector) {
+
+        selector.addEventListener("change", function () {
+
+            const itemId =
+                this.dataset.itemId;
+
+
+            const itemName =
+                this.dataset.itemName;
+
+
+            const availableQuantity =
+                parseInt(this.dataset.quantity);
+
+
+            /* Display selected item */
+
+            selectedItemDisplay.textContent =
+                itemName;
+
+
+            /* Store selected item */
+
+            selectedItemId.value =
+                itemId;
+
+
+            /* Set maximum borrow quantity */
+
+            borrowQuantity.max =
+                availableQuantity;
+
+
+            /*
+             * If current quantity is higher
+             * than available stock, reset to 1.
+             */
+
+            if (
+                parseInt(borrowQuantity.value) >
+                availableQuantity
+            ) {
+
+                borrowQuantity.value = 1;
+
+            }
+
+
+            /* Update hidden quantity */
+
+            selectedQuantity.value =
+                borrowQuantity.value;
+
+
+            /*
+             * Enable actions only when
+             * stock is available.
+             */
+
+            if (availableQuantity > 0) {
+
+                borrowButton.disabled = false;
+                holdButton.disabled = false;
+
+            } else {
+
+                borrowButton.disabled = true;
+                holdButton.disabled = true;
+
+            }
+
+        });
+
+    });
+
+
+    /* =====================================================
+       UPDATE QUANTITY
+       ===================================================== */
+
+    borrowQuantity.addEventListener("input", function () {
+
+        let quantity =
+            parseInt(this.value);
+
+
+        /*
+         * Quantity must be at least 1.
+         */
+
+        if (
+            isNaN(quantity) ||
+            quantity < 1
+        ) {
+
+            quantity = 1;
+
+            this.value = 1;
+
+        }
+
+
+        /*
+         * Check selected equipment.
+         */
+
+        const selected =
+            document.querySelector(
+                ".equipment-selector:checked"
+            );
+
+
+        if (selected) {
+
+            const maxQuantity =
+                parseInt(
+                    selected.dataset.quantity
+                );
+
+
+            /*
+             * Do not allow quantity
+             * higher than available stock.
+             */
+
+            if (quantity > maxQuantity) {
+
+                quantity = maxQuantity;
+
+                this.value =
+                    maxQuantity;
+
+            }
+
+        }
+
+
+        selectedQuantity.value =
+            quantity;
+
+    });
+
+
+    /* =====================================================
+       BORROW FORM VALIDATION
+       ===================================================== */
+
+    document
+        .getElementById("borrow-form")
+        .addEventListener("submit", function (event) {
+
+            /*
+             * No equipment selected.
+             */
+
+            if (!selectedItemId.value) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select an equipment item first."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Invalid quantity.
+             */
+
+            if (
+                !borrowQuantity.value ||
+                parseInt(borrowQuantity.value) < 1
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please enter a valid quantity."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Check maximum quantity.
+             */
+
+            const selected =
+                document.querySelector(
+                    ".equipment-selector:checked"
+                );
+
+
+            if (selected) {
+
+                const maxQuantity =
+                    parseInt(
+                        selected.dataset.quantity
+                    );
+
+
+                const requestedQuantity =
+                    parseInt(
+                        borrowQuantity.value
+                    );
+
+
+                if (
+                    requestedQuantity >
+                    maxQuantity
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Requested quantity exceeds available stock."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            selectedQuantity.value =
+                borrowQuantity.value;
+
+        });
+
+
+    /* =====================================================
+       PLACE HOLD
+       ===================================================== */
+
+    holdButton.addEventListener("click", function (event) {
+
+        if (!selectedItemId.value) {
+
+            event.preventDefault();
+
+            alert(
+                "Please select an equipment item first."
+            );
+
+            return;
+
+        }
+
+
+        holdItemId.value =
+            selectedItemId.value;
+
+
+        holdQuantity.value =
+            borrowQuantity.value;
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,361 @@
+    {% extends "base.html" %}
+
+    {% block content %}
+
+    <div class="student-layout admin-borrows-layout">
+
+        <!-- =====================================================
+            ADMIN SIDEBAR
+            ===================================================== -->
+
+        <aside class="student-sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-brand-title">
+                    CAMPUS<br>
+                    HARDWARE
+                </div>
+
+                <div class="sidebar-brand-subtitle">
+                    Laboratory Inventory
+                </div>
+
+            </div>
+
+
+            <!-- SIDEBAR NAVIGATION -->
+
+            <nav class="sidebar-nav">
+
+                <!-- DASHBOARD -->
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="sidebar-link"
+                >
+                    <span class="sidebar-icon">▣</span>
+                    <span>Dashboard</span>
+                </a>
+
+
+                <!-- EQUIPMENTS -->
+
+                <a
+                    href="{{ url_for('admin_equipment') }}"
+                    class="sidebar-link"
+                >
+                    <span class="sidebar-icon">▤</span>
+                    <span>Equipments</span>
+                </a>
+
+
+                <!-- BORROWS / RETURN -->
+
+                <a
+                    href="{{ url_for('admin_borrows') }}"
+                    class="sidebar-link active"
+                >
+                    <span class="sidebar-icon">▥</span>
+                    <span>Borrows / Return</span>
+                </a>
+
+
+                <!-- QUEUE & HOLDS MANAGER -->
+
+                <a
+                    href="{{ url_for('queue_holds_manager') }}"
+                    class="sidebar-link"
+                >
+                    <span class="sidebar-icon">◷</span>
+                    <span>Queue &amp; Holds Manager</span>
+                </a>
+
+
+                <!-- ITEM REQUESTS -->
+
+                <a
+                href="{{ url_for('admin_item_requests') }}" 
+                class="sidebar-link"
+                >
+                    <span class="sidebar-icon">▤</span>
+                    <span>Item Requests</span>
+        
+                </a>
+            </nav>
+
+
+            <!-- SIDEBAR BOTTOM -->
+
+            <div class="sidebar-bottom">
+
+                <!-- ADMIN APPROVALS -->
+
+                <a
+                    href="{{ url_for('admin_approvals') }}"
+                    class="sidebar-account"
+                >
+                    Admin Approvals
+                </a>
+                    
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="sidebar-logout"
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================================
+            MAIN CONTENT
+            ===================================================== -->
+
+        <main class="student-main">
+
+            <section class="student-content">
+
+                <div class="student-panel admin-borrows-panel">
+
+
+                    <!-- =================================================
+                        PANEL HEADER
+                        ================================================= -->
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Borrow History
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                        BORROW HISTORY TABLE
+                        ================================================= -->
+
+                    <div class="table-wrapper">
+
+                        <table class="equipment-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>User</th>
+
+                                    <th>Item Name</th>
+
+                                    <th>Qty</th>
+
+                                    <th>Borrow Date</th>
+
+                                    <th>Due Date</th>
+
+                                    <th>Status</th>
+
+                                    <th>Renews</th>
+
+                                    <th>Fine</th>
+
+                                    <th>Action</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% if borrow_history %}
+
+                                    {% for loan in borrow_history %}
+
+                                    <tr>
+
+                                        <!-- ID -->
+
+                                        <td>
+                                            {{ loan.id }}
+                                        </td>
+
+
+                                        <!-- USER -->
+
+                                        <td>
+                                            {{ loan.username }}
+                                        </td>
+
+
+                                        <!-- ITEM NAME -->
+
+                                        <td>
+                                            {{ loan.item_name }}
+                                        </td>
+
+
+                                        <!-- QUANTITY -->
+
+                                        <td>
+                                            {{ loan.quantity }}
+                                        </td>
+
+
+                                        <!-- BORROW DATE -->
+
+                                        <td>
+                                            {{ loan.borrowed_at }}
+                                        </td>
+
+
+                                        <!-- DUE DATE -->
+
+                                        <td>
+                                            {{ loan.due_date }}
+                                        </td>
+
+
+                                        <!-- STATUS -->
+
+                                        <td>
+
+                                            {% if loan.return_status == "Approved" %}
+
+                                                <span class="status-badge status-in-stock">
+                                                    Returned
+                                                </span>
+
+                                            {% elif loan.return_status == "Pending" %}
+
+                                                <span class="status-badge status-low-stock">
+                                                    Return Pending
+                                                </span>
+
+                                            {% elif loan.status == "Approved" %}
+
+                                                <span class="status-badge status-in-stock">
+                                                    Borrowed
+                                                </span>
+
+                                            {% elif loan.status == "Rejected" %}
+
+                                                <span class="status-badge status-out-of-stock">
+                                                    Rejected
+                                                </span>
+
+                                            {% elif loan.status == "Pending" %}
+
+                                                <span class="status-badge status-low-stock">
+                                                    Pending
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="status-badge">
+                                                    {{ loan.status }}
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                        <!-- RENEWS -->
+
+                                        <td>
+                                            {{ loan.renewal_count }}
+                                        </td>
+
+
+                                        <!-- FINE -->
+
+                                        <td>
+                                            ₱0.00
+                                        </td>
+
+
+                                        <!-- ACTION -->
+
+                                        <td>
+
+                                            {% if loan.status in ["Pending", "Approved"] and loan.return_status != "Approved" %}
+
+                                                <form
+                                                    method="POST"
+                                                    action="{{ url_for('admin_return_item') }}"
+                                                    style="display: inline;"
+                                                >
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="borrow_id"
+                                                        value="{{ loan.id }}"
+                                                    >
+
+                                                    <button
+                                                        type="submit"
+                                                        class="secondary-btn"
+                                                    >
+                                                        Return
+                                                    </button>
+
+                                                </form>
+
+                                            {% else %}
+
+                                                -
+
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <tr>
+
+                                        <td
+                                            colspan="10"
+                                            class="empty-state"
+                                        >
+                                            No borrow history found.
+                                        </td>
+
+                                    </tr>
+
+                                {% endif %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    {% endblock %}

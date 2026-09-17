@@ -1,0 +1,2050 @@
+{% extends "base.html" %}
+
+{% block title %}Equipments{% endblock %}
+
+{% block content %}
+
+<div class="student-portal">
+
+    <!-- ============================= -->
+    <!-- ADMIN SIDEBAR -->
+    <!-- ============================= -->
+
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-brand-title">
+                CAMPUS<br>
+                HARDWARE
+            </div>
+
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_equipment') }}"
+                class="sidebar-link active"
+            >
+                <span class="sidebar-icon">▤</span>
+                <span>Equipments</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_borrows') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▥</span>
+                <span>Borrows / Return</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('queue_holds_manager') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">◷</span>
+                <span>Queue &amp; Holds Manager</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_item_requests') }}"
+                class="sidebar-link"
+            >
+                <span class="sidebar-icon">▤</span>
+                <span>Item Requests</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-separator"></div>
+
+            <a
+                href="{{ url_for('admin_approvals') }}"
+                class="sidebar-account"
+            >
+                Admin Approvals
+            </a>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="sidebar-logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ============================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================= -->
+
+    <main class="student-main">
+
+        <section class="student-content">
+
+
+            <!-- ============================= -->
+            <!-- INVENTORY LAYOUT -->
+            <!-- ============================= -->
+
+            <div class="admin-equipment-layout">
+
+
+                <!-- ============================= -->
+                <!-- LEFT: ITEM MANAGEMENT -->
+                <!-- ============================= -->
+
+                <div class="dashboard-card item-management-card">
+
+                    <div class="item-management-header">
+
+                        <h2>
+                            Item Management
+                        </h2>
+
+                        <p>
+                            Add or update equipment.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ADD / UPDATE FORM -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('admin_equipment') }}"
+                        class="equipment-management-form"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            id="form-action"
+                            value="add"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="item_id"
+                            id="item-id"
+                            value=""
+                        >
+
+
+                        <!-- ITEM NAME -->
+
+                        <div class="form-group">
+
+                            <label for="item-name">
+                                Item Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="item-name"
+                                name="item_name"
+                                placeholder="Enter item name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="form-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                placeholder="Enter category"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="form-group">
+
+                            <label for="quantity">
+                                Quantity
+                            </label>
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                min="0"
+                                step="1"
+                                placeholder="Enter quantity"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- UNIT PRICE -->
+
+                        <div class="form-group">
+
+                            <label for="unit-price">
+                                Unit Price (₱)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="unit-price"
+                                name="unit_price"
+                                min="0"
+                                step="0.01"
+                                placeholder="Enter unit price"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="equipment-form-actions">
+
+                            <button
+                                type="submit"
+                                class="primary-btn"
+                                onclick="setAddAction()"
+                            >
+                                Add New Item
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                class="secondary-btn"
+                                onclick="setUpdateAction()"
+                            >
+                                Save Updates
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                onclick="clearEquipmentForm()"
+                            >
+                                Clear Fields
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- ============================= -->
+                <!-- RIGHT: EQUIPMENT AREA -->
+                <!-- ============================= -->
+
+                <div class="equipment-right-area">
+
+
+                    <!-- ============================= -->
+                    <!-- EQUIPMENT LIST HEADER -->
+                    <!-- ============================= -->
+
+                    <div class="equipment-list-top">
+
+                        <div class="equipment-list-title">
+
+                            <h2>
+                                Equipment List
+                            </h2>
+
+                            <p>
+                                Search and filter laboratory equipment.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ============================= -->
+                    <!-- SEARCH / FILTER -->
+                    <!-- ============================= -->
+
+                    <div
+                        class="dashboard-card equipment-filter-card"
+                    >
+
+                        <form
+                            method="GET"
+                            action="{{ url_for('admin_equipment') }}"
+                            class="equipment-filter-form"
+                        >
+
+
+                            <!-- SEARCH -->
+
+                            <div class="form-group">
+
+                                <label for="search">
+                                    Search
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    value="{{ search }}"
+                                    placeholder="Search equipment..."
+                                >
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="form-group">
+
+                                <label for="category-filter">
+                                    Category Filter
+                                </label>
+
+                                <select
+                                    id="category-filter"
+                                    name="category"
+                                >
+
+                                    <option value="All">
+                                        All Categories
+                                    </option>
+
+                                    {% for category in categories %}
+
+                                        <option
+                                            value="{{ category }}"
+                                            {% if selected_category == category %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            {{ category }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- ACTIONS -->
+
+                            <div class="filter-actions">
+
+                                <button
+                                    type="submit"
+                                    class="primary-btn"
+                                >
+                                    Search
+                                </button>
+
+
+                                <a
+                                    href="{{ url_for('admin_equipment') }}"
+                                    class="secondary-btn"
+                                >
+                                    Reset Filters
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- ============================= -->
+                    <!-- EQUIPMENT RECORDS -->
+                    <!-- ============================= -->
+
+                    <div
+                        class="dashboard-card equipment-records-card"
+                    >
+
+
+                        <!-- RECORDS HEADER -->
+
+                        <div class="equipment-records-header">
+
+
+                            <!-- TITLE -->
+
+                            <div class="equipment-records-title">
+
+                                <h2>
+                                    Equipment Records
+                                </h2>
+
+                                <p>
+                                    Select an item to edit it, or check items
+                                    for deletion/export.
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- ============================= -->
+                            <!-- TOTAL STOCK + LEGEND -->
+                            <!-- ============================= -->
+
+                            <div class="equipment-records-summary">
+
+
+                                <!-- TOTAL STOCK -->
+
+                                <div class="total-stock-card">
+
+                                    <div class="total-stock-icon">
+                                        ▤
+                                    </div>
+
+                                    <div class="total-stock-content">
+
+                                        <span class="total-stock-label">
+                                            Total Stock
+                                        </span>
+
+                                  <strong class="total-stock-number">
+    {{
+        items
+        | map(attribute='quantity')
+        | map('int')
+        | sum
+    }}
+</strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- STOCK STATUS LEGEND -->
+
+                                <div class="stock-legend">
+
+                                    <div class="legend-title">
+                                        Legend
+                                    </div>
+
+                                    <div class="legend-items">
+
+                                        <div class="legend-item">
+
+                                            <span
+                                                class="legend-dot legend-green"
+                                            ></span>
+
+                                            <span>
+                                                In Stock
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="legend-item">
+
+                                            <span
+                                                class="legend-dot legend-yellow"
+                                            ></span>
+
+                                            <span>
+                                                Low Stock
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="legend-item">
+
+                                            <span
+                                                class="legend-dot legend-red"
+                                            ></span>
+
+                                            <span>
+                                                Out of Stock
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ============================= -->
+                        <!-- TABLE -->
+                        <!-- ============================= -->
+
+                        <div class="equipment-table-wrapper">
+
+                            <table class="equipment-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Select
+                                        </th>
+
+                                        <th>
+                                            ID
+                                        </th>
+
+                                        <th>
+                                            Item Name
+                                        </th>
+
+                                        <th>
+                                            Category
+                                        </th>
+
+                                        <th>
+                                            Initial Qty
+                                        </th>
+
+                                        <th>
+                                            Qty
+                                        </th>
+
+                                        <th>
+                                            Borrowed
+                                        </th>
+
+                                        <th>
+                                            Unit Price
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% if items %}
+
+                                        {% for item in items %}
+
+                                            <tr
+                                                data-item-id="{{ item.id }}"
+                                                data-item-name="{{ item.name }}"
+                                                data-item-category="{{ item.category }}"
+                                                data-item-quantity="{{ item.quantity }}"
+                                                data-item-price="{{ item.unit_price }}"
+                                                class="equipment-row"
+                                            >
+
+
+                                                <!-- SELECT -->
+
+                                                <td
+                                                    onclick="event.stopPropagation();"
+                                                >
+
+                                                    <input
+                                                        type="checkbox"
+                                                        name="table_item_ids"
+                                                        value="{{ item.id }}"
+                                                        class="equipment-checkbox"
+                                                    >
+
+                                                </td>
+
+
+                                                <!-- ID -->
+
+                                                <td>
+                                                    {{ item.id }}
+                                                </td>
+
+
+                                                <!-- ITEM NAME -->
+
+                                                <td class="item-name-cell">
+                                                    {{ item.name }}
+                                                </td>
+
+
+                                                <!-- CATEGORY -->
+
+                                                <td>
+                                                    {{ item.category }}
+                                                </td>
+
+
+                                                <!-- INITIAL QTY -->
+
+                                                <td>
+                                                    {{ item.initial_quantity }}
+                                                </td>
+
+
+                                                <!-- CURRENT QTY -->
+
+                                                <td>
+                                                    {{ item.quantity }}
+                                                </td>
+
+
+                                                <!-- BORROWED -->
+
+                                                <td>
+                                                    {{ item.borrowed_quantity }}
+                                                </td>
+
+
+                                                <!-- UNIT PRICE -->
+
+                                                <td>
+                                                    ₱{{ "%.2f"|format(item.unit_price|float) }}
+                                                </td>
+
+
+                                                <!-- STATUS -->
+
+                                                <td>
+
+                                                    <span
+                                                        class="status-badge
+                                                        {% if item.quantity <= 0 %}
+                                                            status-out-of-stock
+                                                        {% elif item.status == 'Low Stock' %}
+                                                            status-low-stock
+                                                        {% else %}
+                                                            status-in-stock
+                                                        {% endif %}"
+                                                    >
+
+                                                        {% if item.quantity <= 0 %}
+
+                                                            Out of Stock
+
+                                                        {% elif item.status == 'Low Stock' %}
+
+                                                            Low Stock
+
+                                                        {% else %}
+
+                                                            In Stock
+
+                                                        {% endif %}
+
+                                                    </span>
+
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+
+
+                                    {% else %}
+
+                                        <tr>
+
+                                            <td
+                                                colspan="9"
+                                                class="empty-table-message"
+                                            >
+                                                No equipment records found.
+                                            </td>
+
+                                        </tr>
+
+                                    {% endif %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+
+                        <!-- ============================= -->
+                        <!-- TABLE ACTIONS -->
+                        <!-- ============================= -->
+
+                        <div class="equipment-table-actions">
+
+
+                            <!-- DESELECT -->
+
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                onclick="deselectAll()"
+                            >
+                                Deselect All
+                            </button>
+
+
+
+                            <!-- DELETE -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('admin_equipment') }}"
+                                id="delete-form"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="action"
+                                    value="delete"
+                                >
+
+                                <div
+                                    id="delete-items-container"
+                                ></div>
+
+                                <button
+                                    type="submit"
+                                    class="danger-btn"
+                                    onclick="return prepareDelete()"
+                                >
+                                    Delete Checked Items
+                                </button>
+
+                            </form>
+
+
+
+                            <!-- EXPORT -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('admin_equipment') }}"
+                                id="export-form"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="action"
+                                    value="export"
+                                >
+
+                                <div
+                                    id="export-items-container"
+                                ></div>
+
+                                <button
+                                    type="submit"
+                                    class="secondary-btn"
+                                    onclick="prepareExport()"
+                                >
+                                    Export Filtered / Selected to CSV
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- ========================================================= -->
+<!-- PAGE STYLE -->
+<!-- ========================================================= -->
+
+<style>
+
+/* =========================================================
+   MAIN EQUIPMENT LAYOUT
+   ========================================================= */
+
+.admin-equipment-layout {
+
+    display: grid;
+
+    grid-template-columns: 205px minmax(0, 1fr);
+
+    gap: 14px;
+
+    align-items: start;
+
+}
+
+
+
+/* =========================================================
+   ITEM MANAGEMENT
+   ========================================================= */
+
+.item-management-card {
+
+    margin: 0;
+
+    padding: 14px;
+
+}
+
+
+
+.item-management-header h2 {
+
+    margin: 0;
+
+    color: #082f6b;
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+}
+
+
+
+.item-management-header p {
+
+    margin: 6px 0 14px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+}
+
+
+
+.equipment-management-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+}
+
+
+
+.equipment-management-form .form-group {
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.equipment-management-form label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #082f6b;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+}
+
+
+
+.equipment-management-form input {
+
+    width: 100%;
+
+    height: 36px;
+
+    box-sizing: border-box;
+
+    padding: 0 10px;
+
+    border: 1px solid #cbd7e6;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #082f6b;
+
+    font-size: 11px;
+
+}
+
+
+
+.equipment-form-actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-top: 5px;
+
+}
+
+
+
+.equipment-form-actions button {
+
+    width: 100%;
+
+    min-height: 32px;
+
+    padding: 5px 8px;
+
+    font-size: 11px;
+
+}
+
+
+
+/* =========================================================
+   RIGHT AREA
+   ========================================================= */
+
+.equipment-right-area {
+
+    min-width: 0;
+
+}
+
+
+
+/* =========================================================
+   EQUIPMENT LIST HEADER
+   ========================================================= */
+
+.equipment-list-top {
+
+    margin-bottom: 12px;
+
+}
+
+
+
+.equipment-list-title h2 {
+
+    margin: 2px 0 4px;
+
+    color: #002d72;
+
+    font-size: 24px;
+
+    font-weight: 900;
+
+}
+
+
+
+.equipment-list-title p {
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================================================
+   EQUIPMENT RECORDS HEADER
+   TOTAL STOCK + LEGEND BESIDE RECORDS
+   ========================================================= */
+
+.equipment-records-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-bottom: 18px;
+
+}
+
+
+
+.equipment-records-title {
+
+    flex: 1;
+
+    min-width: 220px;
+
+}
+
+
+
+.equipment-records-title h2 {
+
+    margin: 0;
+
+    color: #082f6b;
+
+    font-size: 23px;
+
+    font-weight: 900;
+
+}
+
+
+
+.equipment-records-title p {
+
+    margin: 7px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+
+}
+
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.equipment-records-summary {
+
+    display: flex;
+
+    align-items: stretch;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+}
+
+
+
+/* =========================================================
+   TOTAL STOCK CARD
+   ========================================================= */
+
+.total-stock-card {
+
+    min-width: 145px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #d6dfeb;
+
+    border-top: 4px solid #f4c300;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 45, 114, 0.07);
+
+    box-sizing: border-box;
+
+}
+
+
+
+.total-stock-icon {
+
+    width: 31px;
+
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #eaf1fa;
+
+    border-radius: 7px;
+
+    color: #002d72;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+}
+
+
+
+.total-stock-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+
+.total-stock-label {
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+
+}
+
+
+
+.total-stock-number {
+
+    margin-top: 2px;
+
+    color: #002d72;
+
+    font-size: 20px;
+
+    line-height: 1.1;
+
+    font-weight: 900;
+
+}
+
+
+
+.total-stock-description {
+
+    color: #94a3b8;
+
+    font-size: 8px;
+
+    margin-top: 2px;
+
+}
+
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.stock-legend {
+
+    min-width: 255px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #d6dfeb;
+
+    border-top: 4px solid #f4c300;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 45, 114, 0.06);
+
+    box-sizing: border-box;
+
+}
+
+
+
+.legend-title {
+
+    color: #002d72;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+}
+
+
+
+.legend-items {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+
+.legend-item {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #475569;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+
+.legend-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    flex-shrink: 0;
+
+}
+
+
+
+.legend-green {
+
+    background: #16a34a;
+
+}
+
+
+
+.legend-yellow {
+
+    background: #f4c300;
+
+}
+
+
+
+.legend-red {
+
+    background: #dc2626;
+
+}
+
+
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.equipment-filter-card {
+
+    margin: 0 0 14px 0;
+
+    padding: 17px 14px;
+
+}
+
+
+
+.equipment-filter-form {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+
+}
+
+
+
+.equipment-filter-form .form-group:first-child {
+
+    flex: 1;
+
+}
+
+
+
+.equipment-filter-form .form-group:nth-child(2) {
+
+    flex: 1;
+
+}
+
+
+
+.equipment-filter-form .form-group {
+
+    margin: 0;
+
+}
+
+
+
+.equipment-filter-form label {
+
+    display: block;
+
+    color: #002d72;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 6px;
+
+}
+
+
+
+.equipment-filter-form input,
+
+.equipment-filter-form select {
+
+    width: 100%;
+
+    height: 40px;
+
+    box-sizing: border-box;
+
+    padding: 0 12px;
+
+    border: 1px solid #cbd7e6;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #002d72;
+
+    font-size: 13px;
+
+}
+
+
+
+.filter-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-shrink: 0;
+
+}
+
+
+
+/* =========================================================
+   RECORDS CARD
+   ========================================================= */
+
+.equipment-records-card {
+
+    margin: 0;
+
+}
+
+
+
+.equipment-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+
+.equipment-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 13px;
+
+}
+
+
+
+.equipment-table thead {
+
+    background: #002d72;
+
+}
+
+
+
+.equipment-table th {
+
+    padding: 11px 9px;
+
+    color: #ffffff;
+
+    text-align: left;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+
+.equipment-table td {
+
+    padding: 11px 9px;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+}
+
+
+
+.equipment-table tbody tr {
+
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+
+}
+
+
+
+.equipment-table tbody tr:hover {
+
+    background: #f8fafc;
+
+}
+
+
+
+.item-name-cell {
+
+    color: #002d72 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 800;
+
+}
+
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 5px 9px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+
+.status-in-stock {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+
+}
+
+
+
+.status-low-stock {
+
+    background: #fff4c2;
+
+    color: #7a5b00;
+
+    border: 1px solid #f4c300;
+
+}
+
+
+
+.status-out-of-stock {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+}
+
+
+
+/* =========================================================
+   TABLE ACTIONS
+   ========================================================= */
+
+.equipment-table-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding-top: 14px;
+
+}
+
+
+
+.equipment-table-actions form {
+
+    margin: 0;
+
+}
+
+
+
+/* =========================================================
+   EMPTY TABLE
+   ========================================================= */
+
+.empty-table-message {
+
+    text-align: center;
+
+    color: #64748b !important;
+
+    padding: 25px !important;
+
+}
+
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .equipment-records-header {
+
+        align-items: flex-start;
+
+    }
+
+    .equipment-records-summary {
+
+        gap: 8px;
+
+    }
+
+    .total-stock-card {
+
+        min-width: 135px;
+
+    }
+
+    .stock-legend {
+
+        min-width: 225px;
+
+    }
+
+}
+
+
+
+@media (max-width: 1050px) {
+
+    .equipment-records-header {
+
+        flex-direction: column;
+
+    }
+
+    .equipment-records-summary {
+
+        width: 100%;
+
+        justify-content: flex-start;
+
+    }
+
+}
+
+
+
+@media (max-width: 850px) {
+
+    .admin-equipment-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .equipment-filter-form {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .filter-actions {
+
+        justify-content: flex-start;
+
+    }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+    .equipment-records-summary {
+
+        flex-direction: column;
+
+    }
+
+    .total-stock-card,
+
+    .stock-legend {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+    .legend-items {
+
+        flex-wrap: wrap;
+
+    }
+
+    .equipment-table-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+}
+
+</style>
+
+
+
+<!-- ========================================================= -->
+<!-- PAGE JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+function setAddAction() {
+
+    document.getElementById(
+        "form-action"
+    ).value = "add";
+
+}
+
+
+
+function setUpdateAction() {
+
+    document.getElementById(
+        "form-action"
+    ).value = "update";
+
+}
+
+
+
+function selectEquipment(
+    id,
+    name,
+    category,
+    quantity,
+    unitPrice
+) {
+
+    document.getElementById(
+        "item-id"
+    ).value = id;
+
+
+    document.getElementById(
+        "item-name"
+    ).value = name;
+
+
+    document.getElementById(
+        "category"
+    ).value = category;
+
+
+    document.getElementById(
+        "quantity"
+    ).value = quantity;
+
+
+    document.getElementById(
+        "unit-price"
+    ).value = unitPrice;
+
+
+    document.getElementById(
+        "form-action"
+    ).value = "update";
+
+}
+
+
+
+function clearEquipmentForm() {
+
+    document.getElementById(
+        "item-id"
+    ).value = "";
+
+
+    document.getElementById(
+        "item-name"
+    ).value = "";
+
+
+    document.getElementById(
+        "category"
+    ).value = "";
+
+
+    document.getElementById(
+        "quantity"
+    ).value = "";
+
+
+    document.getElementById(
+        "unit-price"
+    ).value = "";
+
+
+    document.getElementById(
+        "form-action"
+    ).value = "add";
+
+}
+
+
+
+function getCheckedItems() {
+
+    return Array.from(
+
+        document.querySelectorAll(
+            ".equipment-checkbox:checked"
+        )
+
+    );
+
+}
+
+
+
+function deselectAll() {
+
+    document
+        .querySelectorAll(
+            ".equipment-checkbox"
+        )
+        .forEach(function (checkbox) {
+
+            checkbox.checked = false;
+
+        });
+
+}
+
+
+
+function prepareDelete() {
+
+    const checkedItems =
+        getCheckedItems();
+
+
+    if (
+        checkedItems.length === 0
+    ) {
+
+        alert(
+            "Please check at least one item to delete."
+        );
+
+        return false;
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "delete-items-container"
+        );
+
+
+    container.innerHTML = "";
+
+
+    checkedItems.forEach(
+        function (checkbox) {
+
+            const input =
+                document.createElement(
+                    "input"
+                );
+
+            input.type = "hidden";
+
+            input.name = "item_ids";
+
+            input.value =
+                checkbox.value;
+
+            container.appendChild(
+                input
+            );
+
+        }
+    );
+
+
+    return confirm(
+        "Are you sure you want to delete the selected item(s)?"
+    );
+
+}
+
+
+
+function prepareExport() {
+
+    const checkedItems =
+        getCheckedItems();
+
+
+    const container =
+        document.getElementById(
+            "export-items-container"
+        );
+
+
+    container.innerHTML = "";
+
+
+    checkedItems.forEach(
+        function (checkbox) {
+
+            const input =
+                document.createElement(
+                    "input"
+                );
+
+            input.type = "hidden";
+
+            input.name = "item_ids";
+
+            input.value =
+                checkbox.value;
+
+            container.appendChild(
+                input
+            );
+
+        }
+    );
+
+}
+
+
+
+/* ============================= */
+/* ROW CLICK = LOAD ITEM */
+/* ============================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        document
+            .querySelectorAll(
+                ".equipment-row"
+            )
+            .forEach(
+                function (row) {
+
+                    row.addEventListener(
+                        "click",
+                        function () {
+
+                            selectEquipment(
+
+                                row.dataset.itemId,
+
+                                row.dataset.itemName,
+
+                                row.dataset.itemCategory,
+
+                                row.dataset.itemQuantity,
+
+                                row.dataset.itemPrice
+
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+);
+
+</script>
+
+{% endblock %}

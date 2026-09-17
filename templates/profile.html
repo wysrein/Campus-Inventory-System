@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Account & Security{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <h1>Account & Security</h1>
+
+    <p>Profile settings for @{{ profile.username }}</p>
+
+    <div class="profile-info">
+
+        <div class="profile-field">
+            <strong>Username:</strong>
+            <p>{{ profile.username }}</p>
+        </div>
+
+        <div class="profile-field">
+            <strong>Email:</strong>
+            <p>{{ profile.email }}</p>
+        </div>
+
+        <div class="profile-field">
+            <strong>Role:</strong>
+            <p>{{ profile.role }}</p>
+        </div>
+
+    </div>
+
+    <form method="POST" action="{{ url_for('profile') }}">
+
+        <div class="form-group">
+            <label for="old_password">Current Password</label>
+
+            <input
+                type="password"
+                id="old_password"
+                name="old_password"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="new_password">New Password</label>
+
+            <input
+                type="password"
+                id="new_password"
+                name="new_password"
+                required
+            >
+        </div>
+
+        <p>
+            Min. 8 chars, 1 uppercase, 1 number, 1 special character
+        </p>
+
+        <div class="form-group">
+            <label>
+                <input
+                    type="checkbox"
+                    onclick="togglePasswords()"
+                >
+                Show Passwords
+            </label>
+        </div>
+
+        <button type="submit" class="btn">
+            Update Password
+        </button>
+
+    </form>
+
+    <div class="dashboard-actions">
+
+        <a href="{{ url_for('dashboard') }}" class="btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+function togglePasswords() {
+    const oldPassword = document.getElementById("old_password");
+    const newPassword = document.getElementById("new_password");
+
+    if (oldPassword.type === "password") {
+        oldPassword.type = "text";
+        newPassword.type = "text";
+    } else {
+        oldPassword.type = "password";
+        newPassword.type = "password";
+    }
+}
+</script>
+
+{% endblock %}

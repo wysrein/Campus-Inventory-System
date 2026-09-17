@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Campus Hardware Inventory{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- BLUE TOP HEADER -->
+    <header class="site-header">
+
+        <div class="site-header-content">
+
+            <div class="site-header-brand">
+                <div class="site-header-title">
+                    CAMPUS HARDWARE
+                </div>
+
+                <div class="site-header-subtitle">
+                    Laboratory Inventory System
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+        <script>
+    setTimeout(function () {
+        document.querySelectorAll(".alert").forEach(function (alert) {
+            alert.remove();
+        });
+    }, 3000);
+</script>
+
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Campus Hardware Inventory System</p>
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

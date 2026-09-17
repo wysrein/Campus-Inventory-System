@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Lab Technician Login - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="form-container">
+
+        <div class="back-arrow">
+
+            <a
+                href="{{ url_for('index') }}"
+                aria-label="Back to account selection"
+                title="Back to account selection"
+            >
+                ←
+            </a>
+
+        </div>
+
+
+        <h1>Lab Technician Login</h1>
+
+        <p>
+            Sign in to manage the laboratory hardware inventory.
+        </p>
+
+
+        <form method="POST" action="{{ url_for('admin_login') }}">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autocomplete="username"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    onclick="togglePassword('password')"
+                >
+                    Show password
+                </button>
+
+            </div>
+
+
+            <button type="submit" class="btn">
+                Lab Technician Login
+            </button>
+
+        </form>
+
+
+        <div class="form-links">
+
+            <p>
+
+                <a href="{{ url_for('reset_request') }}">
+                    Forgot Password?
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

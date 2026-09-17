@@ -1,0 +1,3793 @@
+/* =========================================================
+   CAMPUS HARDWARE INVENTORY SYSTEM
+   NU-INSPIRED BLUE / GOLD / WHITE THEME
+   ========================================================= */
+
+
+/* =========================================================
+   COLOR VARIABLES
+   ========================================================= */
+
+:root {
+    --nu-blue: #002D72;
+    --nu-dark-blue: #001F4D;
+    --nu-blue-light: #EAF1FA;
+    --nu-blue-soft: #F4F7FB;
+
+    --nu-gold: #F4C300;
+    --nu-gold-dark: #C99F00;
+    --nu-gold-light: #FFF8D8;
+
+    --white: #FFFFFF;
+
+    --text: #172B4D;
+    --muted: #64748B;
+    --border: #D7E0EA;
+
+    --success: #1F7A4D;
+    --success-light: #E9F7EF;
+
+    --warning: #9A6A00;
+    --warning-light: #FFF6D8;
+
+    --danger: #B42318;
+    --danger-light: #FDECEC;
+
+    --shadow: rgba(0, 45, 114, 0.10);
+}
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        "Montserrat",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: var(--nu-blue-soft);
+    color: var(--text);
+}
+
+a {
+    color: var(--nu-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   DEFAULT CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    padding: 35px 0 60px;
+}
+
+
+/* =========================================================
+   BLUE TOP HEADER
+   LOGIN / REGISTER / GENERAL PAGES
+   ========================================================= */
+
+.navbar {
+    width: 100%;
+    min-height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5%;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    border-bottom: 5px solid var(--nu-gold);
+
+    box-shadow:
+        0 4px 14px rgba(0, 45, 114, 0.18);
+
+    position: relative;
+    z-index: 10;
+}
+
+/* =========================================================
+   HEADER BRAND
+   ========================================================= */
+
+.nav-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: var(--white);
+    text-decoration: none;
+
+    line-height: 1.2;
+}
+
+.nav-brand-title {
+    color: var(--white);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.nav-brand-subtitle {
+    margin-top: 4px;
+
+    color: #DCE7F5;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* =========================================================
+   HEADER RIGHT SIDE
+   ========================================================= */
+
+.nav-header-label {
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* =========================================================
+   OLD NAV LINKS
+   ========================================================= */
+
+.nav-links {
+    display: none !important;
+}
+
+/* =========================================================
+   HIDE OLD NAVBAR ON STUDENT PORTAL
+   ========================================================= */
+
+body:has(.student-portal) .navbar {
+    display: none;
+}
+
+body:has(.student-portal) .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   FLASH / ALERT MESSAGES
+   ========================================================= */
+
+.alert {
+    padding: 13px 16px;
+    margin-bottom: 20px;
+
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    background: var(--white);
+    color: var(--text);
+}
+
+.alert.success {
+    border-color: #8AC6A6;
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.alert.danger {
+    border-color: #E9A6A0;
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.alert.warning {
+    border-color: #E5C76B;
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    display: inline-block;
+
+    border: none;
+    border-radius: 7px;
+
+    padding: 12px 22px;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    text-align: center;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn:hover {
+    background: var(--nu-dark-blue);
+    color: var(--white);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--nu-gold);
+    color: var(--nu-dark-blue);
+}
+
+.btn-secondary:hover {
+    background: var(--nu-gold-dark);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: var(--danger);
+}
+
+.btn-danger:hover {
+    background: #8F1D14;
+}
+
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+.form-container {
+    width: min(500px, 100%);
+
+    margin: 30px auto;
+    padding: 38px 42px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--nu-gold);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px var(--shadow);
+}
+
+.form-container h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    text-align: center;
+
+    color: var(--nu-blue);
+
+    font-size: 30px;
+}
+
+.form-container > p {
+    text-align: center;
+
+    color: var(--muted);
+
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: var(--white);
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--nu-blue);
+
+    box-shadow:
+        0 0 0 3px var(--nu-blue-light);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+
+/* =========================================================
+   SHOW PASSWORD
+   ========================================================= */
+
+.show-password {
+    display: block;
+
+    margin-top: 9px;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: var(--nu-blue);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.show-password:hover {
+    color: var(--nu-gold-dark);
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FORM LINKS
+   ========================================================= */
+
+.form-links {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.form-links p {
+    margin: 10px 0;
+}
+
+.form-links a {
+    color: var(--nu-blue);
+    font-weight: 700;
+}
+
+.form-links a:hover {
+    color: var(--nu-gold-dark);
+}
+
+
+/* =========================================================
+   BACK ARROW
+   ========================================================= */
+
+.back-arrow {
+    margin-bottom: 10px;
+}
+
+.back-arrow a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    color: var(--nu-blue);
+
+    font-size: 28px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    border-radius: 50%;
+
+    transition: 0.2s ease;
+}
+
+.back-arrow a:hover {
+    background: var(--nu-blue-light);
+    color: var(--nu-gold-dark);
+
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   STUDENT PORTAL
+   ========================================================= */
+
+.student-portal {
+    display: flex;
+
+    min-height: 100vh;
+
+    background: var(--nu-blue-soft);
+}
+
+
+/* =========================================================
+   STUDENT SIDEBAR
+   ========================================================= */
+
+.student-sidebar {
+    width: 255px;
+    min-height: 100vh;
+
+    flex-shrink: 0;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    display: flex;
+    flex-direction: column;
+
+    position: sticky;
+    top: 0;
+
+    align-self: flex-start;
+}
+
+
+/* =========================================================
+   SIDEBAR BRAND
+   ========================================================= */
+
+.sidebar-brand {
+    padding: 28px 24px 25px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-brand-title {
+    color: var(--white);
+
+    font-size: 19px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.sidebar-brand-subtitle {
+    margin-top: 5px;
+
+    color: #DCE7F5;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px 13px;
+
+    gap: 6px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px 14px;
+
+    border-radius: 7px;
+
+    color: #EAF1FA;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: var(--white);
+}
+
+.sidebar-link.active {
+    background: var(--white);
+    color: var(--nu-blue);
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-icon {
+    width: 22px;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+   ========================================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    padding: 18px 7px 25px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-account {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 7px;
+    color: #EAF1FA;
+    font-size: 13px;
+    font-weight: 700;
+}
+.sidebar-logout {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 7px;
+    color: #EAF1FA;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 7px;
+}
+
+.sidebar-logout:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: var(--nu-gold);
+}
+
+
+/* =========================================================
+   STUDENT MAIN
+   ========================================================= */
+
+.student-main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 0 42px 60px;
+}
+
+
+/* =========================================================
+   STUDENT TOP BAR
+   ========================================================= */
+
+.student-topbar {
+    min-height: 92px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    margin-bottom: 30px;
+}
+
+.student-page-title h1 {
+    margin: 0;
+
+    color: var(--nu-blue);
+
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.student-page-title p {
+    margin: 5px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   STUDENT USER
+   ========================================================= */
+
+.student-user {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.student-user-avatar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--nu-gold);
+    color: var(--nu-dark-blue);
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.student-user-details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.student-user-details strong {
+    color: var(--nu-dark-blue);
+
+    font-size: 13px;
+}
+
+.student-user-details span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   WELCOME CARD
+   ========================================================= */
+
+.welcome-card {
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    padding: 28px 30px;
+
+    margin-bottom: 34px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-left:
+        5px solid var(--nu-gold);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 5px 18px var(--shadow);
+}
+
+.welcome-avatar {
+    width: 68px;
+    height: 68px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.welcome-label {
+    color: var(--nu-gold-dark);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.welcome-text h2 {
+    margin: 5px 0 7px;
+
+    color: var(--nu-blue);
+
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.welcome-text p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   STUDENT INFORMATION
+   ========================================================= */
+
+.student-info {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    margin: 10px 0 12px;
+}
+
+.student-info span {
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.student-info strong {
+    color: var(--nu-dark-blue);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PORTAL SECTIONS
+   ========================================================= */
+
+.portal-section {
+    margin-bottom: 34px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 16px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: var(--nu-blue);
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.section-action {
+    color: var(--nu-blue);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.section-action:hover {
+    color: var(--nu-gold-dark);
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.quick-actions-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.quick-action-card {
+    min-height: 130px;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 20px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--nu-gold);
+
+    box-shadow:
+        0 7px 20px var(--shadow);
+}
+
+.quick-action-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: var(--nu-blue-light);
+    color: var(--nu-blue);
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.quick-action-content h3 {
+    margin: 0 0 5px;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.quick-action-content p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* No arrow on quick action cards */
+
+.quick-action-arrow {
+    display: none;
+}
+
+
+/* =========================================================
+   STATUS GRID
+   ========================================================= */
+
+.status-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 17px;
+}
+
+.status-card {
+    padding: 21px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-top:
+        4px solid var(--nu-gold);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+}
+
+.status-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-card-icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--nu-blue-light);
+    color: var(--nu-blue);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.status-number {
+    margin-top: 15px;
+
+    color: var(--nu-blue);
+
+    font-size: 31px;
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+.status-card p {
+    margin: 9px 0 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ACTIVE BORROWS
+   ========================================================= */
+
+.borrow-summary-box {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+
+    padding: 25px;
+}
+
+.borrow-summary-content {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.borrow-summary-number {
+    width: 60px;
+    height: 60px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.borrow-summary-content h3 {
+    margin: 0 0 5px;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 15px;
+}
+
+.borrow-summary-content p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PRIMARY PORTAL BUTTON
+   ========================================================= */
+
+.primary-portal-btn {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding: 10px 18px;
+
+    border-radius: 6px;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.primary-portal-btn:hover {
+    background: var(--nu-dark-blue);
+    color: var(--white);
+}
+
+
+/* =========================================================
+   EMPTY DASHBOARD
+   ========================================================= */
+
+.empty-dashboard {
+    text-align: center;
+
+    padding: 30px 20px;
+}
+
+.empty-icon {
+    width: 45px;
+    height: 45px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--success-light);
+    color: var(--success);
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.empty-dashboard h3 {
+    margin: 0 0 6px;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 15px;
+}
+
+.empty-dashboard p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PORTAL TABLE
+   ========================================================= */
+
+.portal-table-container {
+    overflow-x: auto;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+}
+
+.portal-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.portal-table th {
+    padding: 13px 14px;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+.portal-table td {
+    padding: 13px 14px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color: var(--text);
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+.portal-table tr:last-child td {
+    border-bottom: none;
+}
+
+.portal-table tbody tr:hover td {
+    background: var(--nu-blue-soft);
+}
+
+.table-item-name {
+    color: var(--nu-blue) !important;
+    font-weight: 700;
+}
+
+.borrow-status {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: var(--success-light);
+    color: var(--success);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CATALOG / EQUIPMENT GENERAL
+   ========================================================= */
+
+.catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.catalog-header h1 {
+    margin: 0;
+    color: var(--nu-blue);
+}
+
+.catalog-header p {
+    color: var(--muted);
+}
+
+.catalog-tools {
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.search-form input,
+.search-form select {
+    padding: 11px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: var(--white);
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.search-form input:focus,
+.search-form select:focus {
+    border-color: var(--nu-blue);
+
+    box-shadow:
+        0 0 0 3px var(--nu-blue-light);
+}
+
+
+/* =========================================================
+   STANDARD TABLE
+   ========================================================= */
+
+.table-container {
+    overflow-x: auto;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 5px 16px var(--shadow);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-weight: 700;
+}
+
+th,
+td {
+    padding: 13px 12px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: var(--nu-blue-soft);
+}
+
+
+/* =========================================================
+   BORROW FORM
+   ========================================================= */
+
+.borrow-form {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.borrow-form input {
+    width: 70px;
+
+    padding: 8px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+}
+
+.borrow-form .btn {
+    padding: 8px 12px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status.available {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.status.borrowed {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.status.pending {
+    background: var(--nu-blue-light);
+    color: var(--nu-blue);
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-card {
+    max-width: 650px;
+
+    margin: 20px auto;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-top:
+        4px solid var(--nu-gold);
+
+    border-radius: 9px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 7px 20px var(--shadow);
+}
+
+.profile-card h1 {
+    color: var(--nu-blue);
+    margin-top: 0;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.profile-row:last-child {
+    border-bottom: none;
+}
+
+.profile-label {
+    font-weight: 700;
+    color: var(--nu-dark-blue);
+}
+
+
+/* =========================================================
+   ADMIN APPROVALS
+   ========================================================= */
+
+.approval-section {
+    margin-bottom: 30px;
+}
+
+.approval-section h2 {
+    color: var(--nu-blue);
+
+    margin-bottom: 15px;
+}
+
+.approval-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 16px var(--shadow);
+}
+
+.approval-actions {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   HISTORY
+   ========================================================= */
+
+.history-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 16px var(--shadow);
+}
+
+.history-card h1 {
+    color: var(--nu-blue);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 25px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* Hide old footer on student portal */
+
+body:has(.student-portal) footer {
+    display: none;
+}
+
+
+/* =========================================================
+   EQUIPMENT INVENTORY PAGE
+   ========================================================= */
+
+.equipment-page {
+    width: 100%;
+}
+
+
+/* =========================================================
+   EQUIPMENT HEADER
+   ========================================================= */
+
+.equipment-header {
+    margin-bottom: 20px;
+}
+
+.equipment-header h1 {
+    margin: 0;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.equipment-header p {
+    margin: 6px 0 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   EQUIPMENT MAIN LAYOUT
+   ========================================================= */
+
+.equipment-layout {
+    display: grid;
+
+    grid-template-columns:
+        250px minmax(0, 1fr);
+
+    gap: 16px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   LAB BORROWING PANEL
+   ========================================================= */
+
+.lab-borrow-panel {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-top:
+        4px solid var(--nu-gold);
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 6px 18px var(--shadow);
+}
+
+.borrow-panel-title {
+    color: var(--nu-dark-blue);
+
+    font-size: 18px;
+    font-weight: 800;
+
+    margin-bottom: 24px;
+}
+
+.borrow-field {
+    margin-bottom: 20px;
+}
+
+.borrow-field label {
+    display: block;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.selected-item-display {
+    min-height: 40px;
+
+    padding: 10px 12px;
+
+    background: #F5F8FC;
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    display: flex;
+    align-items: center;
+}
+
+#borrow-quantity {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #CBD5E1;
+
+    border-radius: 5px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+#borrow-quantity:focus {
+    border-color: var(--nu-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 45, 114, 0.10);
+}
+
+
+/* =========================================================
+   BORROW BUTTONS
+   ========================================================= */
+
+.borrow-action-btn {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 5px;
+
+    padding: 12px 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    margin-top: 8px;
+}
+
+.primary-borrow-btn {
+    background: var(--nu-blue);
+    color: var(--white);
+}
+
+.primary-borrow-btn:hover:not(:disabled) {
+    background: var(--nu-dark-blue);
+
+    transform: translateY(-1px);
+}
+
+.primary-borrow-btn:disabled {
+    background: #CBD5E1;
+    color: var(--muted);
+
+    cursor: not-allowed;
+}
+
+.hold-btn {
+    background: var(--nu-blue-light);
+
+    color: var(--nu-blue);
+
+    border:
+        1px solid var(--border);
+}
+
+.hold-btn:hover:not(:disabled) {
+    background: #E4EBF4;
+}
+
+.hold-btn:disabled {
+    color: #94A3B8;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   EQUIPMENT INVENTORY
+   ========================================================= */
+
+.equipment-inventory {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SEARCH TOOLBAR
+   ========================================================= */
+
+.equipment-toolbar {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-top:
+        4px solid var(--nu-gold);
+
+    border-radius: 8px;
+
+    padding: 14px 16px;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+}
+
+.equipment-search-form {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.search-group,
+.category-group {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.search-group label,
+.category-group label {
+    color: var(--nu-dark-blue);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.search-group input {
+    width: 190px;
+
+    padding: 9px 11px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    background: #F8FAFC;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.search-group input:focus {
+    border-color: var(--nu-blue);
+}
+
+.category-group select {
+    min-width: 125px;
+
+    padding: 9px 10px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    background: var(--white);
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.filter-btn {
+    padding: 9px 18px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    background: var(--nu-blue);
+    color: var(--white);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background: var(--nu-dark-blue);
+}
+
+.reset-filter-btn {
+    padding: 9px 16px;
+
+    border-radius: 4px;
+
+    background: var(--nu-blue-light);
+    color: var(--nu-blue);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.reset-filter-btn:hover {
+    background: #E1E9F3;
+}
+
+
+/* =========================================================
+   EQUIPMENT TABLE
+   ========================================================= */
+
+.equipment-table-container {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    overflow-x: auto;
+
+    box-shadow:
+        0 5px 16px var(--shadow);
+}
+
+.equipment-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 600px;
+}
+
+.equipment-table thead {
+    background: var(--nu-blue);
+}
+
+.equipment-table th {
+    padding: 13px 14px;
+
+    color: var(--white);
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.equipment-table td {
+    padding: 13px 14px;
+
+    border-bottom:
+        1px solid #E2E8F0;
+
+    color: #334155;
+
+    font-size: 13px;
+}
+
+.equipment-row {
+    transition: 0.15s ease;
+}
+
+.equipment-row:hover {
+    background: #F7FAFF;
+}
+
+.equipment-row:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   SELECT COLUMN
+   ========================================================= */
+
+.select-column {
+    width: 60px;
+
+    text-align: center !important;
+}
+
+.equipment-selector {
+    width: 16px;
+    height: 16px;
+
+    accent-color: var(--nu-blue);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   ITEM NAME
+   ========================================================= */
+
+.item-name-cell {
+    color: var(--nu-dark-blue) !important;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   EQUIPMENT STATUS
+   ========================================================= */
+
+.status-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.in-stock {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.low-stock {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.high-stock {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.out-of-stock {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   NO ITEMS
+   ========================================================= */
+
+.no-items {
+    text-align: center !important;
+
+    padding: 40px 20px !important;
+
+    color: var(--muted) !important;
+}
+
+
+/* =========================================================
+   ACCOUNT SUMMARY
+   ========================================================= */
+
+.account-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr))
+        auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    background: var(--nu-blue);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 5px 18px var(--shadow);
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.summary-item span {
+    color: #BFD0E5;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+}
+
+.summary-item strong {
+    color: var(--white);
+
+    font-size: 15px;
+}
+
+.summary-button {
+    display: inline-block;
+
+    padding: 10px 15px;
+
+    border-radius: 6px;
+
+    background: var(--nu-gold);
+    color: var(--nu-dark-blue);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-align: center;
+}
+
+.summary-button:hover {
+    background: var(--white);
+    color: var(--nu-blue);
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD
+   ========================================================= */
+
+.admin-dashboard-section {
+    border-top:
+        1px solid var(--border);
+
+    padding-top: 28px;
+}
+
+.admin-action-wrapper {
+    max-width: 500px;
+}
+
+.admin-action-card {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 18px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-left:
+        4px solid var(--nu-gold);
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 4px 14px var(--shadow);
+}
+
+.admin-action-card:hover {
+    border-color: var(--nu-gold);
+}
+
+.admin-action-icon {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: var(--nu-blue-light);
+    color: var(--nu-blue);
+
+    font-weight: 800;
+}
+
+.admin-action-card h3 {
+    margin: 0 0 4px;
+
+    color: var(--nu-dark-blue);
+
+    font-size: 14px;
+}
+
+.admin-action-card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.admin-action-card > span {
+    margin-left: auto;
+
+    color: var(--nu-gold-dark);
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   ACCOUNT CHOICE PAGE
+   ========================================================= */
+
+.account-choice-page {
+    min-height: 100vh;
+    background: var(--nu-blue-soft);
+
+    padding: 52px 5% 40px;
+}
+
+
+/* =========================================================
+   HIDE OLD NAVBAR
+   ========================================================= */
+
+body:has(.account-choice-page) .navbar {
+    display: none !important;
+}
+
+body:has(.account-choice-page) .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.account-choice-header {
+    text-align: center;
+
+    max-width: 1000px;
+
+    margin: 0 auto 38px;
+}
+
+
+/* SMALL WELCOME TEXT */
+
+.account-choice-eyebrow {
+    margin-bottom: 10px;
+
+    color: #5572A6;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+}
+
+
+/* MAIN TITLE */
+
+.account-choice-header h1 {
+    margin: 0;
+
+    color: var(--nu-blue);
+
+    font-size: 48px;
+
+    font-weight: 800;
+
+    line-height: 1.15;
+}
+
+
+/* SUBTITLE */
+
+.account-choice-header p {
+    margin: 14px 0 0;
+
+    color: #5572A6;
+
+    font-size: 19px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD CONTAINER
+   ========================================================= */
+
+.account-choice-container {
+    width: min(1280px, 100%);
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 35px;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD
+   ========================================================= */
+
+.account-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 275px;
+
+    padding: 30px 40px 30px 46px;
+
+    background: var(--white);
+
+    border: 1px solid #D9E5F4;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 45, 114, 0.08);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* =========================================================
+   GOLD LEFT LINE
+   ========================================================= */
+
+.student-card::before,
+.technician-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 11px;
+
+    background: var(--nu-gold);
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.account-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #C8D9ED;
+
+    box-shadow:
+        0 12px 30px rgba(0, 45, 114, 0.12);
+}
+
+
+/* =========================================================
+   SMALL ACCOUNT ICON
+   ========================================================= */
+
+.account-icon {
+    width: 66px;
+    height: 66px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 30px;
+
+    border-radius: 50%;
+
+    background: #EAF2FC;
+
+    color: var(--nu-blue);
+
+    font-size: 28px;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.account-card-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.account-card-content h2 {
+    margin: 0 0 12px;
+
+    color: var(--nu-blue);
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.account-description {
+    max-width: 470px;
+
+    margin: 0;
+
+    color: #5B76A5;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.account-divider {
+    width: 100%;
+
+    max-width: 490px;
+
+    height: 1px;
+
+    margin: 18px 0;
+
+    background: #DCE8F6;
+}
+
+
+/* =========================================================
+   LOGIN LINK
+   ========================================================= */
+
+.account-login-link {
+    display: inline-block;
+
+    color: #0057D9;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+.account-login-link:hover {
+    color: var(--nu-gold-dark);
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   REGISTER TEXT
+   ========================================================= */
+
+.account-register-text {
+    margin: 12px 0 0;
+
+    color: #6881AA;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+}
+
+
+/* REGISTER HERE - NOT BOLD */
+
+.account-register-text a {
+    color: #0057D9;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    text-decoration: none;
+}
+
+.account-register-text a:hover {
+    color: var(--nu-gold-dark);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.account-choice-footer {
+    margin-top: 82px;
+
+    text-align: center;
+
+    color: #6D83A8;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .account-choice-page {
+        padding: 45px 4% 35px;
+    }
+
+    .account-choice-header h1 {
+        font-size: 40px;
+    }
+
+    .account-choice-header p {
+        font-size: 17px;
+    }
+
+    .account-choice-container {
+        gap: 25px;
+    }
+
+    .account-card {
+        padding: 30px 30px 30px 38px;
+    }
+
+    .account-icon {
+        width: 60px;
+        height: 60px;
+
+        margin-right: 22px;
+
+        font-size: 25px;
+    }
+
+    .account-card-content h2 {
+        font-size: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .account-choice-page {
+        padding: 38px 20px 30px;
+    }
+
+    .account-choice-header {
+        margin-bottom: 30px;
+    }
+
+    .account-choice-eyebrow {
+        font-size: 10px;
+
+        letter-spacing: 1.5px;
+    }
+
+    .account-choice-header h1 {
+        font-size: 32px;
+    }
+
+    .account-choice-header p {
+        font-size: 14px;
+    }
+
+    .account-choice-container {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .account-card {
+        min-height: auto;
+
+        padding: 30px 28px 30px 35px;
+    }
+
+    .account-icon {
+        width: 58px;
+        height: 58px;
+
+        margin-right: 20px;
+
+        font-size: 25px;
+    }
+
+    .account-card-content h2 {
+        font-size: 23px;
+    }
+
+    .account-description {
+        font-size: 13px;
+    }
+
+    .account-login-link {
+        font-size: 14px;
+    }
+
+    .account-register-text,
+    .account-register-text a {
+        font-size: 12px;
+    }
+
+    .account-choice-footer {
+        margin-top: 45px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .account-card {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        padding: 28px 25px 28px 32px;
+    }
+
+    .account-icon {
+        margin-right: 0;
+
+        margin-bottom: 18px;
+    }
+
+}
+
+/* =========================================================
+   BLUE TOP HEADER
+   ========================================================= */
+
+.site-header {
+    width: 100%;
+    background: linear-gradient(
+        135deg,
+        var(--nu-dark-blue),
+        var(--nu-blue)
+    );
+
+    color: var(--white);
+
+    border-bottom: 4px solid var(--nu-gold);
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+.site-header-content {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+
+    min-height: 88px;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.site-header-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.site-header-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+}
+
+
+.site-header-subtitle {
+    margin-top: 4px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #dce7f5;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   AUTH PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: calc(100vh - 88px);
+
+    background: var(--nu-blue-soft);
+
+    padding: 40px 20px 60px;
+}
+
+
+.auth-page .form-container {
+    width: min(500px, 100%);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .site-header-content {
+        width: 90%;
+        min-height: 78px;
+    }
+
+    .site-header-title {
+        font-size: 18px;
+    }
+
+    .site-header-subtitle {
+        font-size: 11px;
+    }
+
+    .auth-page {
+        padding: 25px 15px 40px;
+    }
+
+}
+
+/* =========================================================
+   HIDE BLUE HEADER INSIDE STUDENT PORTAL
+   ========================================================= */
+
+body:has(.student-portal) .site-header {
+    display: none;
+}
+
+.request-history-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.request-item-card,
+.request-history-card {
+    background: #FFFFFF;
+    border: 1px solid #D5DEEA;
+    border-radius: 10px;
+    padding: 22px;
+}
+
+.request-card-header h2 {
+    margin: 0 0 6px;
+    color: #003B7A;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.request-card-header p {
+    margin: 0 0 22px;
+    color: #60738A;
+    font-size: 13px;
+}
+
+.request-form-group {
+    margin-bottom: 18px;
+}
+
+.request-form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #17324D;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.request-form-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #C8D4E2;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.request-submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #003B7A;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.request-history-table-wrapper {
+    overflow-x: auto;
+}
+
+.request-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.request-history-table th {
+    padding: 12px;
+    text-align: left;
+    color: #003B7A;
+    background: #F2F6FA;
+    font-weight: 800;
+}
+
+.request-history-table td {
+    padding: 12px;
+    border-top: 1px solid #E2E8F0;
+    color: #40566E;
+}
+
+.no-request-history {
+    text-align: center;
+    color: #718096 !important;
+    padding: 30px !important;
+}
+
+/* Account & Security password form */
+.form-group input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    margin: 0 6px 0 0;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-group label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 25px;
+    align-items: center;
+}
+
+.dashboard-actions .btn {
+    margin: 0;
+}
+
+/* ==========================================================
+   CUTE PASTEL YELLOW EQUIPMENT BUTTONS
+   ========================================================== */
+
+.equipment-management-form .primary-btn,
+.equipment-management-form .secondary-btn,
+.equipment-table-actions .secondary-btn,
+.equipment-table-actions .danger-btn {
+    background: #fff3c4;
+    color: #082f6b;
+    border: 1px solid #f1d77a;
+    font-weight: 700;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(8, 47, 107, 0.08);
+    transition: all 0.2s ease;
+}
+
+.equipment-management-form .primary-btn:hover,
+.equipment-management-form .secondary-btn:hover,
+.equipment-table-actions .secondary-btn:hover,
+.equipment-table-actions .danger-btn:hover {
+    background: #ffe9a3;
+    color: #082f6b;
+    border-color: #e8c95f;
+    box-shadow: 0 3px 8px rgba(8, 47, 107, 0.12);
+    transform: translateY(-1px);
+}
+
+.equipment-management-form .primary-btn:active,
+.equipment-management-form .secondary-btn:active,
+.equipment-table-actions .secondary-btn:active,
+.equipment-table-actions .danger-btn:active {
+    background: #ffdf7d;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(8, 47, 107, 0.08);
+}
+
+/* ============================= */
+/* STOCK STATUS COLORS */
+/* ============================= */
+
+.status-in-stock {
+    background: #dff5e8;
+    color: #16804a;
+    border: 1px solid #b8e8cc;
+}
+
+.status-low-stock {
+    background: #fff2cc;
+    color: #a66a00;
+    border: 1px solid #f3d77a;
+}
+
+.status-out-of-stock {
+    background: #fde2e2;
+    color: #c62828;
+    border: 1px solid #f3b5b5;
+}
+
+.status-high-stock {
+    background: #dff5e8;
+    color: #16804a;
+    border: 1px solid #b8e8cc;
+}
+
+.equipment-table-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+/* ==========================================================
+   ADMIN EQUIPMENT - CUTE SECTION CARDS
+   ========================================================== */
+
+.equipment-management-form,
+.equipment-list-panel {
+    background: #ffffff;
+    border: 1px solid #d9e2ef;
+    border-top: 4px solid #f4d35e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(8, 47, 107, 0.08);
+    padding: 18px;
+}
+
+
+/* Give the two panels a little breathing room */
+
+.equipment-management-form {
+    margin-bottom: 14px;
+}
+
+.equipment-list-panel {
+    min-width: 0;
+}
+
+
+/* Softer panel headings */
+
+.equipment-management-form h2,
+.equipment-list-panel h2 {
+    color: #082f6b;
+    margin-top: 0;
+}
+
+/* =========================================
+   ADMIN EQUIPMENT - CUTE CLEAN CARD STYLE
+   ========================================= */
+
+/* Main equipment cards */
+.student-portal .dashboard-card {
+    background: #ffffff;
+    border: 1px solid #dbe3ee;
+    border-top: 3px solid #f4d35e;
+    border-radius: 9px;
+    box-shadow: 0 3px 12px rgba(8, 47, 107, 0.08);
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+
+/* Keep headings clean - NO DOT */
+.student-portal .dashboard-card h2::before {
+    content: none;
+}
+
+.student-portal .student-content {
+    padding-top: 14px;
+}
+
+
+/* =========================================
+   LIGHT YELLOW BUTTONS
+   ========================================= */
+
+.student-portal .equipment-management-form .primary-btn,
+.student-portal .equipment-management-form .secondary-btn,
+.student-portal .equipment-table-actions .secondary-btn,
+.student-portal .equipment-table-actions .danger-btn {
+    background: #fff1c7;
+    color: #082f6b;
+    border: 1px solid #f4d35e;
+    font-weight: 700;
+    border-radius: 7px;
+    box-shadow: none;
+}
+
+.student-portal .equipment-management-form .primary-btn:hover,
+.student-portal .equipment-management-form .secondary-btn:hover,
+.student-portal .equipment-table-actions .secondary-btn:hover,
+.student-portal .equipment-table-actions .danger-btn:hover {
+    background: #ffe8a3;
+    color: #082f6b;
+    border-color: #e8c43f;
+}
+
+
+/* =========================================
+   SEARCH BUTTON
+   ========================================= */
+
+.student-portal .equipment-filter-form .primary-btn {
+    background: #082f6b;
+    color: #ffffff;
+    border: 1px solid #082f6b;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.student-portal .equipment-filter-form .primary-btn:hover {
+    background: #0b3f8c;
+}
+
+
+/* Reset Filters */
+.student-portal .equipment-filter-form .secondary-btn {
+    background: #eaf1fa;
+    color: #082f6b;
+    border: 1px solid #eaf1fa;
+    border-radius: 6px;
+}
+
+
+/* =========================================
+   EQUIPMENT TABLE
+   ========================================= */
+
+.student-portal .equipment-table {
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.student-portal .equipment-table thead th {
+    background: #082f6b;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   STATUS BADGES
+   ========================================= */
+
+.student-portal .status-in-stock {
+    background: #e4f6ed;
+    color: #16804a;
+    border: 1px solid #c4ead5;
+}
+
+.student-portal .status-low-stock {
+    background: #fff3d1;
+    color: #a66a00;
+    border: 1px solid #f4d77d;
+}
+
+.student-portal .status-out-of-stock {
+    background: #fde4e4;
+    color: #c62828;
+    border: 1px solid #f3bcbc;
+}
+
+.student-portal .status-high-stock {
+    background: #e4f6ed;
+    color: #16804a;
+    border: 1px solid #c4ead5;
+}
+
+.student-portal .student-content {
+    padding-top: 15px;
+}
+
+/* =========================================================
+   ADMIN BORROWS / RETURN LAYOUT
+   ADMIN PAGE ONLY
+   ========================================================= */
+
+.student-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--nu-blue-soft);
+}
+
+.student-layout .student-sidebar {
+    width: 255px;
+    min-height: 100vh;
+    flex-shrink: 0;
+    background: var(--nu-blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+}
+
+.student-layout .student-main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 42px 60px;
+}
+
+.student-layout .student-content {
+    padding-top: 14px;
+}
+
+/* ================================
+   ADMIN BORROWS / RETURN PAGE ONLY
+   ================================ */
+
+.student-layout .student-panel {
+    background: #ffffff;
+    border: 1px solid #dbe3ee;
+    border-top: 3px solid #f4d35e;
+    border-radius: 9px;
+    box-shadow: 0 3px 12px rgba(8, 47, 107, 0.08);
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+.student-layout .student-content {
+    padding-top: 14px;
+}
+
+.student-layout .student-panel .panel-header {
+    margin-bottom: 14px;
+}
+
+.student-layout .student-panel h2::before {
+    content: none;
+}
+
+.student-layout .student-panel .equipment-table {
+    width: 100%;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.student-layout .student-panel .equipment-table thead th {
+    background: #082f6b;
+    color: #ffffff;
+}
+
+.student-layout .equipment-table-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.student-layout .equipment-table-actions .secondary-btn {
+    background: #fff1c7;
+    color: #082f6b;
+    border: 1px solid #f4d35e;
+    border-radius: 7px;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.student-layout .equipment-table-actions .secondary-btn:hover {
+    background: #ffe8a3;
+    color: #082f6b;
+    border-color: #e8c43f;
+}
+
+/* =========================================================
+   ADMIN BORROWS / RETURN
+   ADMIN PAGE ONLY
+   ========================================================= */
+
+.admin-borrows-panel {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #dbe3ee;
+    border-top: 3px solid #f4d35e;
+    border-radius: 9px;
+    box-shadow: 0 3px 12px rgba(8, 47, 107, 0.08);
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+
+/* Move the admin content slightly down */
+
+.student-layout .student-content {
+    padding-top: 14px;
+}
+
+
+/* Panel heading */
+
+.admin-borrows-panel .panel-header {
+    margin-bottom: 14px;
+}
+
+.admin-borrows-panel h2 {
+    margin: 0;
+    color: #082f6b;
+}
+
+.admin-borrows-panel h2::before {
+    content: none;
+}
+
+.admin-borrows-panel .panel-header p {
+    margin-top: 5px;
+    color: #6b7280;
+}
+
+
+/* Table */
+
+.admin-borrows-panel .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-borrows-panel .equipment-table {
+    width: 100%;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.admin-borrows-panel .equipment-table thead th {
+    background: #082f6b;
+    color: #ffffff;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-borrows-panel .equipment-table tbody td {
+    vertical-align: middle;
+}
+
+
+/* Status badges */
+
+.admin-borrows-panel .status-badge {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-borrows-panel .status-in-stock {
+    background: #e4f6ed;
+    color: #16804a;
+    border: 1px solid #c4ead5;
+}
+
+.admin-borrows-panel .status-low-stock {
+    background: #fff3d1;
+    color: #a66a00;
+    border: 1px solid #f4d77d;
+}
+
+.admin-borrows-panel .status-out-of-stock {
+    background: #fde4e4;
+    color: #c62828;
+    border: 1px solid #f3bcbc;
+}
+
+
+/* Action buttons */
+
+.admin-borrows-panel .equipment-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.admin-borrows-panel .equipment-table-actions .secondary-btn {
+    background: #fff1c7;
+    color: #082f6b;
+    border: 1px solid #f4d35e;
+    border-radius: 7px;
+    font-weight: 700;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.admin-borrows-panel .equipment-table-actions .secondary-btn:hover {
+    background: #ffe8a3;
+    color: #082f6b;
+    border-color: #e8c43f;
+}
+
+/* =========================================================
+   ADMIN BORROWS / RETURN
+   ADMIN ONLY
+   ========================================================= */
+
+.admin-borrows-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: var(--nu-blue-soft);
+    box-sizing: border-box;
+}
+
+.admin-borrows-layout .student-sidebar {
+    width: 255px;
+    min-width: 255px;
+    height: 100vh;
+    flex-shrink: 0;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    overflow-y: auto;
+}
+
+.admin-borrows-layout .student-main {
+    width: calc(100% - 255px);
+    min-width: 0;
+    margin-left: 255px;
+    padding: 0 42px 60px;
+    box-sizing: border-box;
+}
+
+.admin-borrows-layout .student-content {
+    width: 100%;
+    max-width: none;
+    padding-top: 14px;
+    box-sizing: border-box;
+}
+
+.admin-borrows-layout .admin-borrows-panel {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* HIDE TOP HEADER ON ADMIN BORROWS / RETURN ONLY */
+body:has(.admin-borrows-layout) .site-header {
+    display: none;
+}
+
+/* =========================================================
+   ADMIN BORROWS / RETURN
+   MATCH BORROW HISTORY FULL-WIDTH DESIGN
+   ========================================================= */
+
+.admin-borrows-layout {
+    display: flex !important;
+    width: 100vw !important;
+    min-height: 100vh !important;
+
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+
+    background: var(--nu-blue-soft);
+}
+
+
+/* SIDEBAR */
+.admin-borrows-layout .student-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+
+    width: 255px !important;
+    min-width: 255px !important;
+    height: 100vh !important;
+
+    z-index: 1000;
+}
+
+
+/* RIGHT SIDE */
+.admin-borrows-layout .student-main {
+    width: calc(100vw - 255px) !important;
+    min-width: 0 !important;
+
+    margin-left: 255px !important;
+
+    padding: 24px !important;
+
+    box-sizing: border-box;
+}
+
+
+/* REMOVE TOP HEADER/BAR */
+.admin-borrows-layout .student-topbar {
+    display: none !important;
+}
+
+
+/* CONTENT */
+.admin-borrows-layout .student-content {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box;
+}
+
+
+/* ALL BORROWS & RETURNS LOG */
+.admin-borrows-layout .admin-borrows-panel {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: -40px 0 0 0 !important;
+
+    min-height: calc(100vh - 48px);
+
+    padding: 18px !important;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #dbe3ee;
+    border-top: 3px solid #f4d35e;
+    border-radius: 9px;
+
+    box-shadow: 0 3px 12px rgba(8, 47, 107, 0.08);
+}
+
+
+/* TABLE */
+.admin-borrows-layout .admin-borrows-panel .table-wrapper {
+    width: 100% !important;
+    max-width: none !important;
+
+    overflow-x: auto;
+}
+
+
+.admin-borrows-layout .admin-borrows-panel .equipment-table {
+    width: 100% !important;
+    min-width: 100% !important;
+    table-layout: fixed;
+}
+
+
+/* ACTION BUTTONS */
+.admin-borrows-layout .admin-borrows-panel .equipment-table-actions {
+    width: 100%;
+    margin-top: -15px;
+}
+
+/* ==========================================
+   SIDEBAR ACCOUNT LINKS - HOVER
+   ========================================== */
+
+.sidebar-account {
+    display: block;
+    padding: 12px 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+/* Admin Approvals / My Profile & Security hover */
+.sidebar-account:hover {
+    background: #EAF1FA;
+    color: #002D72;
+}
+
+/* Active account page */
+.sidebar-account.active {
+    background: #EAF1FA;
+    color: #002D72;
+}
+
+/* ==========================================
+   LOGOUT
+   ========================================== */
+
+.sidebar-logout {
+    display: block;
+    padding: 12px 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.sidebar-logout:hover {
+    background: #EAF1FA;
+    color: #002D72;
+}
+
+/* =====================================================
+   TOTAL STOCK + STOCK LEGEND
+   NU MANILA THEME
+   ===================================================== */
+
+.inventory-summary-bar {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+
+/* =====================================================
+   TOTAL STOCK CARD
+   ===================================================== */
+
+.total-stock-card {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #d9e2ef;
+    border-left: 5px solid #F4C300;
+    border-radius: 10px;
+    padding: 18px 22px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 45, 114, 0.08);
+}
+
+.total-stock-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.total-stock-number {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #002D72;
+}
+
+.total-stock-description {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+
+/* =====================================================
+   STOCK LEGEND
+   ===================================================== */
+
+.stock-legend {
+    min-width: 330px;
+    background: #ffffff;
+    border: 1px solid #d9e2ef;
+    border-radius: 10px;
+    padding: 18px 22px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 45, 114, 0.08);
+}
+
+.legend-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #002D72;
+    margin-bottom: 12px;
+}
+
+.legend-items {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+
+
+/* =====================================================
+   LEGEND INDICATORS
+   ===================================================== */
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-green {
+    background: #22c55e;
+}
+
+.legend-yellow {
+    background: #F4C300;
+}
+
+.legend-red {
+    background: #dc2626;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 800px) {
+
+    .inventory-summary-bar {
+        flex-direction: column;
+    }
+
+    .stock-legend {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .total-stock-card {
+        width: 100%;
+    }
+
+}
+
+/* Custom styling para sa Return Button sa Admin Borrows Table */
+.admin-borrows-layout .secondary-btn {
+    background: rgba(0, 51, 102, 0.12) !important;  /* Soft transparent navy/dark blue */
+    color: #003366 !important;                      /* Dark blue text para readable */
+    border: 1px solid rgba(0, 51, 102, 0.25) !important;
+    backdrop-filter: blur(8px) !important;          /* Glassmorphism blur */
+    -webkit-backdrop-filter: blur(8px) !important;  /* Safari support */
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.admin-borrows-layout .secondary-btn:hover {
+    background: rgba(0, 51, 102, 0.25) !important;  /* Mas malinaw nang kaunti kapag in-hover */
+    color: #001f3f !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* =============================================
+   LIGHT COVERED BUTTONS (NO BLUR, SOLID LIGHT COLOR)
+   ============================================= */
+
+.holds-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    
+    /* Walang blur effect */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    
+    transition: all 0.2s ease;
+}
+
+
+/* =============================================
+   READY FOR PICKUP – Light Sky Blue Cover
+   ============================================= */
+
+.holds-btn-pickup {
+    background: #e0f2fe !important; /* Matingkad ngunit light sky blue cover */
+    color: #0369a1 !important;      /* Darker blue text para malinaw basahin */
+    border: 1px solid #bae6fd !important;
+    box-shadow: none !important;
+}
+
+.holds-btn-pickup:hover {
+    background: #bae6fd !important; /* Lumalalim nang kaunti ang kulay kapag in-hover */
+    color: #0c4a6e !important;
+    border-color: #7dd3fc !important;
+}
+
+
+/* =============================================
+   CLAIMED – Light Gold/Yellow Cover (NU Theme)
+   ============================================= */
+
+.holds-btn-claimed {
+    background: #fef9c3 !important; /* Light yellow/gold cover */
+    color: #854d0e !important;      /* Dark gold/brown text */
+    border: 1px solid #fef08a !important;
+    box-shadow: none !important;
+}
+
+.holds-btn-claimed:hover {
+    background: #fef08a !important; /* Medyo mas matingkad na light yellow sa hover */
+    color: #713f12 !important;
+    border-color: #fde047 !important;
+}
+
+/* =============================================
+   BUTTONS (LIGHT & SOFT SHADES)
+   ============================================= */
+
+.ir-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.ir-btn:hover  { transform: translateY(-1px); }
+.ir-btn:active { transform: translateY(0); }
+
+/* Approve — Light Soft Green */
+.ir-btn-approve {
+    background: #dcfce7 !important; /* Soft light green cover */
+    color: #15803d !important;      /* Deep green text para malinaw basahin */
+    border: 1px solid #bbf7d0 !important;
+    box-shadow: none !important;
+}
+
+.ir-btn-approve:hover {
+    background: #bbf7d0 !important; /* Lumalalim nang bahagya sa hover */
+    color: #166534 !important;
+    border-color: #86efac !important;
+}
+
+/* Decline — Light Soft Red */
+.ir-btn-decline {
+    background: #fee2e2 !important; /* Soft light red cover */
+    color: #b91c1c !important;      /* Deep red text */
+    border: 1px solid #fecaca !important;
+    box-shadow: none !important;
+}
+
+.ir-btn-decline:hover {
+    background: #fecaca !important; /* Lumalalim nang bahagya sa hover */
+    color: #991b1b !important;
+    border-color: #fca5a5 !important;
+}

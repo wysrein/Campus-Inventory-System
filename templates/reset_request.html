@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+
+{% block title %}Reset Password - Campus Hardware{% endblock %}
+
+{% block content %}
+
+<div class="reset-page">
+
+    <!-- =====================================================
+         RESET PASSWORD AREA
+         ===================================================== -->
+
+    <div class="reset-container">
+
+        <div class="reset-card">
+
+            <!-- YELLOW TOP BORDER -->
+            <div class="reset-card-top"></div>
+
+
+            <div class="reset-card-content">
+
+                <!-- TITLE -->
+
+                <h1>
+                    Reset Password
+                </h1>
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="reset-description">
+                    Enter your username and registered email to
+                    request a password reset.
+                </p>
+
+
+                <!-- =================================================
+                     FLASH MESSAGES
+                     ================================================= -->
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+
+                    {% if messages %}
+
+                        {% for category, message in messages %}
+
+                            <div class="reset-message {{ category }}">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <!-- =================================================
+                     RESET FORM
+                     ================================================= -->
+
+                <form
+                    method="POST"
+                    action="{{ url_for('reset_request') }}"
+                >
+
+                    <!-- USERNAME -->
+
+                    <div class="reset-field">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            required
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+
+                    <!-- REGISTERED EMAIL -->
+
+                    <div class="reset-field">
+
+                        <label for="email">
+                            Registered Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your registered email"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+
+                    <!-- REQUEST BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="reset-button"
+                    >
+                        Request Reset
+                    </button>
+
+                </form>
+
+
+                <!-- =================================================
+                     BACK TO LOGIN
+                     ================================================= -->
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="back-login"
+                >
+                    Back to Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <div class="reset-footer">
+        Campus Hardware Inventory System
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PAGE-SPECIFIC STYLE
+     ========================================================= -->
+
+<style>
+
+/* =========================================================
+   RESET PAGE
+   ========================================================= */
+
+.reset-page {
+
+    min-height: 100vh;
+
+    background: #F4F7FB;
+
+    color: #002D72;
+
+}
+
+
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+
+.reset-header {
+
+    height: 88px;
+
+    background: #002D72;
+
+    border-bottom: 4px solid #F4C300;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding-left: 19%;
+
+    box-sizing: border-box;
+
+}
+
+
+.reset-brand {
+
+    color: #FFFFFF;
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+.reset-subtitle {
+
+    color: #FFFFFF;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    margin-top: 3px;
+
+}
+
+
+/* =========================================================
+   RESET CONTAINER
+   ========================================================= */
+
+.reset-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding-top: 58px;
+
+    padding-bottom: 75px;
+
+}
+
+
+/* =========================================================
+   RESET CARD
+   ========================================================= */
+
+.reset-card {
+
+    width: 440px;
+
+    background: #FFFFFF;
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 8px 24px rgba(0, 45, 114, 0.10);
+
+    overflow: hidden;
+
+    border: 1px solid #D8E1EC;
+
+}
+
+
+.reset-card-top {
+
+    height: 5px;
+
+    background: #F4C300;
+
+}
+
+
+.reset-card-content {
+
+    padding: 38px 38px 42px;
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.reset-card-content h1 {
+
+    text-align: center;
+
+    margin: 0 0 10px;
+
+    color: #002D72;
+
+    font-size: 27px;
+
+    font-weight: 900;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.reset-description {
+
+    text-align: center;
+
+    color: #718096;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 0 0 30px;
+
+}
+
+
+/* =========================================================
+   FLASH MESSAGES
+   ========================================================= */
+
+.reset-message {
+
+    padding: 11px 13px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.reset-message.success {
+
+    background: #E8F7EE;
+
+    color: #166534;
+
+    border: 1px solid #B7E4C7;
+
+}
+
+
+.reset-message.danger {
+
+    background: #FDECEC;
+
+    color: #B91C1C;
+
+    border: 1px solid #F5C2C2;
+
+}
+
+
+.reset-message.warning {
+
+    background: #FFF8D9;
+
+    color: #7A5B00;
+
+    border: 1px solid #F4C300;
+
+}
+
+
+/* =========================================================
+   FORM FIELDS
+   ========================================================= */
+
+.reset-field {
+
+    margin-bottom: 20px;
+
+}
+
+
+.reset-field label {
+
+    display: block;
+
+    color: #002D72;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    margin-bottom: 7px;
+
+}
+
+
+.reset-field input {
+
+    width: 100%;
+
+    height: 42px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #CBD7E6;
+
+    border-radius: 6px;
+
+    padding: 0 13px;
+
+    background: #FFFFFF;
+
+    color: #002D72;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+
+}
+
+
+.reset-field input:focus {
+
+    border-color: #002D72;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 45, 114, 0.08);
+
+}
+
+
+.reset-field input::placeholder {
+
+    color: #9AA7B8;
+
+}
+
+
+/* =========================================================
+   REQUEST BUTTON
+   ========================================================= */
+
+.reset-button {
+
+    width: auto;
+
+    min-width: 125px;
+
+    height: 42px;
+
+    margin-top: 5px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #002D72;
+
+    color: #FFFFFF;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+.reset-button:hover {
+
+    background: #174B91;
+
+}
+
+
+/* =========================================================
+   BACK TO LOGIN
+   ========================================================= */
+
+.back-login {
+
+    display: block;
+
+    text-align: center;
+
+    margin-top: 28px;
+
+    color: #002D72;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+}
+
+
+.back-login:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.reset-footer {
+
+    text-align: center;
+
+    color: #718096;
+
+    font-size: 12px;
+
+    padding-bottom: 30px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .reset-header {
+
+        padding-left: 25px;
+
+    }
+
+
+    .reset-container {
+
+        padding: 35px 18px 70px;
+
+    }
+
+
+    .reset-card {
+
+        width: 100%;
+
+        max-width: 440px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

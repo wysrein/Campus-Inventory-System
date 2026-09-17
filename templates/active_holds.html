@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}My Active Holds - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="student-portal">
+
+    <!-- SIDEBAR -->
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-title">
+                CAMPUS<br>
+                HARDWARE
+            </div>
+
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <!-- DASHBOARD -->
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <!-- EQUIPMENT INVENTORY -->
+            <a href="{{ url_for('catalog') }}" class="sidebar-link">
+                <span class="sidebar-icon">▤</span>
+                <span>Equipment Inventory</span>
+            </a>
+
+            <!-- BORROW HISTORY -->
+            <a href="{{ url_for('borrow_history') }}" class="sidebar-link">
+                <span class="sidebar-icon">▥</span>
+                <span>Borrow History</span>
+            </a>
+
+            <!-- ACTIVE HOLDS - ACTIVE -->
+            <a href="{{ url_for('active_holds') }}" class="sidebar-link active">
+                <span class="sidebar-icon">◷</span>
+                <span>Active Holds</span>
+            </a>
+
+            <!-- REQUEST HISTORY -->
+            <a href="{{ url_for('request_history') }}" class="sidebar-link">
+                <span class="sidebar-icon">▤</span>
+                <span>Request History</span>
+            </a>
+
+        </nav>
+
+        <!-- BOTTOM -->
+        <div class="sidebar-bottom">
+            <div class="sidebar-separator"></div>
+
+            <a href="{{ url_for('profile') }}" class="sidebar-account">
+                My Account &amp; Security
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="sidebar-logout">
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="student-main">
+
+        <!-- UNIFORM PAGE HEADER -->
+        <div class="student-topbar" style="display: block; width: 100%; margin-bottom: 25px; padding-top: 25px;">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #002b66;">My Active Holds &amp; Queue Positions</h1>
+            <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">View your active equipment holds and queue status.</p>
+        </div>
+
+
+        <!-- ACTIVE HOLDS TABLE -->
+        <section class="portal-section">
+
+            <div class="table-container">
+
+                <table class="hardware-table">
+
+                    <thead>
+                        <tr>
+                            <th>Hold ID</th>
+                            <th>Item Name</th>
+                            <th>Hold Date</th>
+                            <th>Queue Status</th>
+                            <th>Pickup Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for hold in holds %}
+
+                        <tr>
+
+                            <td>
+                                {{ hold.hold_id }}
+                            </td>
+
+                            <td>
+                                {{ hold.item_name }}
+                            </td>
+
+                            <td>
+                                {{ hold.hold_date }}
+                            </td>
+
+                            <td>
+                                {{ hold.queue_status }}
+                            </td>
+
+                            <td>
+                                {{ hold.pickup_status }}
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="5">
+                                No active holds found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- YELLOW ACCENT SA TAAS NG TABLE CONTAINER -->
+<style>
+.table-container {
+    border-top: 4px solid #f4c300 !important;
+}
+</style>
+
+{% endblock %}

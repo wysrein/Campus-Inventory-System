@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Lab Technician Registration - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="form-container">
+
+        <div class="back-arrow">
+
+            <a
+                href="{{ url_for('index') }}"
+                aria-label="Back to account selection"
+                title="Back to account selection"
+            >
+                ←
+            </a>
+
+        </div>
+
+
+        <h1>Lab Technician Registration</h1>
+
+        <p>
+            Create an account for laboratory inventory management.
+        </p>
+
+
+        <form method="POST" action="{{ url_for('admin_register') }}">
+
+            <div class="form-group">
+
+                <label for="full_name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    required
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autocomplete="username"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="employee_id">
+                    Employee ID Number
+                </label>
+
+                <input
+                    type="text"
+                    id="employee_id"
+                    name="employee_id"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="building">
+                    Building
+                </label>
+
+                <input
+                    type="text"
+                    id="building"
+                    name="building"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="laboratory_room">
+                    Laboratory Room
+                </label>
+
+                <input
+                    type="text"
+                    id="laboratory_room"
+                    name="laboratory_room"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    onclick="togglePassword('password')"
+                >
+                    Show password
+                </button>
+
+            </div>
+
+
+            <button type="submit" class="btn">
+                Complete Registration
+            </button>
+
+        </form>
+
+
+        <div class="form-links">
+
+            <p>
+
+                Already have an account?
+
+                <a href="{{ url_for('admin_login') }}">
+                    Back to Lab Technician Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

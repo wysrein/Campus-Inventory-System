@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Account - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="account-choice-page">
+
+    <!-- HEADER -->
+    <div class="account-choice-header">
+
+        <div class="account-choice-eyebrow">
+            WELCOME TO THE CAMPUS HARDWARE INVENTORY SYSTEM
+        </div>
+
+        <h1>
+            Choose Your Account Type
+        </h1>
+
+        <p>
+            Select the account type to continue to the system.
+        </p>
+
+    </div>
+
+
+    <!-- ACCOUNT CARDS -->
+    <div class="account-choice-container">
+
+        <!-- STUDENT -->
+        <div class="account-card student-card">
+
+            <div class="account-icon">
+                🎓
+            </div>
+
+            <div class="account-card-content">
+
+                <h2>
+                    Student
+                </h2>
+
+                <p class="account-description">
+                    For students who want to view available
+                    equipment, request to borrow items,
+                    and manage borrowed equipment.
+                </p>
+
+                <div class="account-divider"></div>
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="account-login-link"
+                >
+                    Student Login
+                </a>
+
+                <p class="account-register-text">
+                    Don't have a student account?
+                    <a href="{{ url_for('register') }}">
+                        Register here
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- LAB TECHNICIAN -->
+        <div class="account-card technician-card">
+
+            <div class="account-icon">
+                🧪
+            </div>
+
+            <div class="account-card-content">
+
+                <h2>
+                    Lab Technician
+                </h2>
+
+                <p class="account-description">
+                    For laboratory technicians who manage
+                    inventory, approve borrowing requests,
+                    and process returns.
+                </p>
+
+                <div class="account-divider"></div>
+
+                <a
+                    href="{{ url_for('admin_login') }}"
+                    class="account-login-link"
+                >
+                    Lab Technician Login
+                </a>
+
+                <p class="account-register-text">
+                    Don't have a Lab Technician account?
+                    <a href="{{ url_for('admin_register') }}">
+                        Register here
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="account-choice-footer">
+        Campus Hardware Inventory System
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,1205 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Approvals - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="admin-approval-page">
+
+    <!-- PAGE HEADER -->
+    <div class="approval-header">
+
+        <div class="approval-header-content">
+
+            <h1>
+                Security &amp; Access Approvals
+            </h1>
+
+            <p>
+                Review password reset requests and approve or decline account access.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- PASSWORD RESET REQUESTS -->
+    <section class="approval-section">
+
+        <div class="approval-section-header">
+
+            <div>
+
+                <h2>
+                    Password Reset Requests
+                </h2>
+
+                <p>
+                    Review password reset requests submitted by users.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- REQUEST TABLE -->
+        <div class="approval-table-container">
+
+            <table class="approval-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Username
+                        </th>
+
+                        <th>
+                            Email Address
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% if password_reset_requests %}
+
+                        {% for req in password_reset_requests %}
+
+                        <tr class="approval-row">
+
+                            <!-- ID -->
+                            <td>
+                                {{ req[0] }}
+                            </td>
+
+
+                            <!-- USERNAME -->
+                            <td class="username-column">
+
+                                <strong>
+                                    {{ req[1] }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- EMAIL -->
+                            <td class="email-column">
+                                {{ req[2] }}
+                            </td>
+
+
+                            <!-- STATUS -->
+                            <td>
+
+                                {% if req[3] == "Pending" %}
+
+                                    <span class="status-badge pending">
+                                        Pending
+                                    </span>
+
+                                {% elif req[3] == "Approved" %}
+
+                                    <span class="status-badge approved">
+                                        Approved
+                                    </span>
+
+                                {% elif req[3] in ["Rejected", "Declined"] %}
+
+                                    <span class="status-badge declined">
+                                        Declined
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge">
+                                        {{ req[3] }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ACTION -->
+                            <td class="action-column">
+
+                                {% if req[3] == "Pending" %}
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('admin_reset_password') }}"
+                                        class="request-action-form"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="request_id"
+                                            value="{{ req[0] }}"
+                                        >
+
+                                        <input
+                                            type="hidden"
+                                            name="username"
+                                            value="{{ req[1] }}"
+                                        >
+
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="approve"
+                                            class="approval-btn approve-btn"
+                                        >
+                                            ✓ Approve &amp; Unlock
+                                        </button>
+
+                                    </form>
+
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('admin_reset_password') }}"
+                                        class="request-action-form"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="request_id"
+                                            value="{{ req[0] }}"
+                                        >
+
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="decline"
+                                            class="approval-btn reject-btn"
+                                        >
+                                            ✕ Decline
+                                        </button>
+
+                                    </form>
+
+                                {% else %}
+
+                                    <span class="processed-text">
+                                        Processed
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty-state"
+                            >
+                                No password reset requests found.
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESET PASSWORD SUCCESS MODAL -->
+    {% if reset_result %}
+
+    <div
+        id="reset-password-modal"
+        class="reset-modal-overlay"
+    >
+
+        <div class="reset-modal">
+
+            <div class="reset-modal-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Password Reset Approved
+            </h2>
+
+
+            <p class="reset-modal-text">
+                The account has been unlocked successfully.
+            </p>
+
+
+            <div class="reset-account-info">
+
+                <div class="reset-info-row">
+
+                    <span>
+                        Username
+                    </span>
+
+                    <strong>
+                        {{ reset_result.username }}
+                    </strong>
+
+                </div>
+
+
+                <div class="reset-info-row">
+
+                    <span>
+                        Temporary Password
+                    </span>
+
+                    <strong class="temporary-password">
+                        {{ reset_result.password }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <p class="reset-warning">
+                Give this temporary password to the user.
+                They can use it to log in.
+            </p>
+
+
+            <button
+                type="button"
+                class="reset-modal-button"
+                onclick="closeResetModal()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   ADMIN APPROVAL PAGE
+   ========================================================= */
+
+.admin-approval-page {
+
+    min-height: calc(100vh - 72px);
+
+    background: #F4F7FB;
+
+    padding: 42px 32px 60px;
+
+    box-sizing: border-box;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    color: #002D72;
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.approval-header {
+
+    background: #FFFFFF;
+
+    border-top: 5px solid #F4C300;
+
+    border-radius: 10px;
+
+    padding: 27px 32px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 45, 114, 0.08);
+
+    box-sizing: border-box;
+
+    margin-bottom: 22px;
+}
+
+
+.approval-header-content {
+    min-width: 0;
+}
+
+
+.approval-header h1 {
+
+    margin: 0;
+
+    color: #002D72;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.3px;
+}
+
+
+.approval-header p {
+
+    margin: 8px 0 0;
+
+    color: #64748B;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.back-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 19px;
+
+    background: #F4C300;
+
+    color: #002D72;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.back-btn:hover {
+
+    background: #E3B500;
+
+    color: #002D72;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(244, 195, 0, 0.25);
+}
+
+
+/* =========================================================
+   APPROVAL SECTION
+   ========================================================= */
+
+.approval-section {
+    width: 100%;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.approval-section-header {
+
+    background: #FFFFFF;
+
+    padding: 24px 30px 20px;
+
+    border-radius: 10px 10px 0 0;
+
+    border: 1px solid #D9E2EE;
+
+    border-bottom: none;
+
+    box-sizing: border-box;
+}
+
+
+.approval-section-header h2 {
+
+    margin: 0;
+
+    color: #002D72;
+
+    font-size: 21px;
+
+    font-weight: 800;
+}
+
+
+.approval-section-header p {
+
+    margin: 7px 0 0;
+
+    color: #718096;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.approval-table-container {
+
+    width: 100%;
+
+    background: #FFFFFF;
+
+    border: 1px solid #D9E2EE;
+
+    border-top: none;
+
+    overflow-x: auto;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 8px 25px rgba(0, 45, 114, 0.07);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.approval-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 13px;
+
+    color: #17365D;
+}
+
+
+.approval-table thead {
+
+    background: #002D72;
+
+    color: #FFFFFF;
+}
+
+
+.approval-table th {
+
+    padding: 14px 12px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    border: none;
+}
+
+
+.approval-table td {
+
+    padding: 15px 12px;
+
+    text-align: center;
+
+    color: #334155;
+
+    background: #FFFFFF;
+
+    border-bottom: 1px solid #E5EAF1;
+
+    vertical-align: middle;
+}
+
+
+.approval-table tbody tr {
+
+    transition: background 0.15s ease;
+}
+
+
+.approval-table tbody tr:hover td {
+
+    background: #F7FAFE;
+}
+
+
+/* =========================================================
+   COLUMN WIDTHS
+   ========================================================= */
+
+.approval-table th:nth-child(1),
+.approval-table td:nth-child(1) {
+
+    width: 70px;
+}
+
+
+.approval-table th:nth-child(2),
+.approval-table td:nth-child(2) {
+
+    width: 190px;
+}
+
+
+.approval-table th:nth-child(3),
+.approval-table td:nth-child(3) {
+
+    width: 300px;
+}
+
+
+.approval-table th:nth-child(4),
+.approval-table td:nth-child(4) {
+
+    width: 140px;
+}
+
+
+.approval-table th:nth-child(5),
+.approval-table td:nth-child(5) {
+
+    width: 260px;
+}
+
+
+/* =========================================================
+   USERNAME
+   ========================================================= */
+
+.username-column strong {
+
+    color: #002D72;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   EMAIL
+   ========================================================= */
+
+.email-column {
+
+    color: #315A8A !important;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+
+    display: inline-block;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+.status-badge.pending {
+
+    background: #FFF4C2;
+
+    color: #735600;
+
+    border: 1px solid #F4C300;
+}
+
+
+.status-badge.approved {
+
+    background: #EAF1FA;
+
+    color: #002D72;
+
+    border: 1px solid #B8CCE8;
+}
+
+
+.status-badge.declined {
+
+    background: #EAF1FA;
+
+    color: #002D72;
+
+    border: 1px solid #B8CCE8;
+}
+
+
+/* =========================================================
+   ACTION COLUMN
+   ========================================================= */
+
+.action-column {
+
+    white-space: nowrap;
+}
+
+
+.request-action-form {
+
+    display: inline-block;
+
+    margin: 2px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.approval-btn {
+
+    border: none;
+
+    padding: 10px 15px;
+
+    border-radius: 7px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.approval-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.approval-btn:active {
+
+    transform: translateY(0);
+}
+
+
+/* APPROVE */
+
+.approve-btn {
+
+    background: #F4C300;
+
+    color: #002D72;
+
+    box-shadow:
+        0 3px 9px rgba(244, 195, 0, 0.25);
+}
+
+
+.approve-btn:hover {
+
+    background: #DDB200;
+
+    color: #002D72;
+
+    box-shadow:
+        0 5px 13px rgba(244, 195, 0, 0.32);
+}
+
+
+/* DECLINE */
+
+.reject-btn {
+
+    background: #002D72;
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 3px 9px rgba(0, 45, 114, 0.20);
+}
+
+
+.reject-btn:hover {
+
+    background: #001F4D;
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 5px 13px rgba(0, 45, 114, 0.30);
+}
+
+
+/* =========================================================
+   PROCESSED TEXT
+   ========================================================= */
+
+.processed-text {
+
+    color: #64748B;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+
+    height: 250px;
+
+    text-align: center !important;
+
+    vertical-align: middle;
+
+    background: #FFFFFF !important;
+
+    color: #64748B !important;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESET PASSWORD MODAL
+   ========================================================= */
+
+.reset-modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 45, 114, 0.35);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+.reset-modal {
+
+    width: 430px;
+
+    max-width: 100%;
+
+    background: #FFFFFF;
+
+    border-radius: 12px;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 45px rgba(0, 45, 114, 0.25);
+
+    border-top: 5px solid #F4C300;
+}
+
+
+.reset-modal-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    margin: 0 auto 14px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #DCFCE7;
+
+    color: #166534;
+
+    font-size: 25px;
+
+    font-weight: 900;
+}
+
+
+.reset-modal h2 {
+
+    margin: 0 0 8px;
+
+    color: #002D72;
+
+    font-size: 22px;
+
+    font-weight: 900;
+}
+
+
+.reset-modal-text {
+
+    margin: 0 0 22px;
+
+    color: #64748B;
+
+    font-size: 13px;
+}
+
+
+.reset-account-info {
+
+    background: #F4F7FB;
+
+    border: 1px solid #D7E1ED;
+
+    border-radius: 8px;
+
+    padding: 15px;
+
+    text-align: left;
+}
+
+
+.reset-info-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 8px 0;
+}
+
+
+.reset-info-row span {
+
+    color: #64748B;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.reset-info-row strong {
+
+    color: #002D72;
+
+    font-size: 13px;
+}
+
+
+.temporary-password {
+
+    background: #FFF4C2;
+
+    border: 1px solid #F4C300;
+
+    padding: 7px 10px;
+
+    border-radius: 5px;
+
+    letter-spacing: 0.5px;
+}
+
+
+.reset-warning {
+
+    margin: 18px 0;
+
+    color: #7A5B00;
+
+    background: #FFF8D9;
+
+    border: 1px solid #F4C300;
+
+    border-radius: 6px;
+
+    padding: 10px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+.reset-modal-button {
+
+    border: none;
+
+    background: #002D72;
+
+    color: #FFFFFF;
+
+    border-radius: 6px;
+
+    padding: 10px 25px;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+.reset-modal-button:hover {
+
+    background: #174B91;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .admin-approval-page {
+
+        padding: 25px 18px 40px;
+    }
+
+
+    .approval-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 24px;
+    }
+
+
+    .approval-header h1 {
+
+        font-size: 23px;
+    }
+
+
+    .approval-table-container {
+
+        overflow-x: auto;
+    }
+
+
+    .approval-table {
+
+        min-width: 1000px;
+
+        table-layout: auto;
+    }
+
+}
+
+
+/* =========================================================
+   JAVASCRIPT
+   ========================================================= */
+
+</style>
+
+
+<script>
+
+function closeResetModal() {
+
+    const modal =
+        document.getElementById("reset-password-modal");
+
+    if (modal) {
+
+        modal.remove();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const approveButtons =
+            document.querySelectorAll(
+                ".approve-btn"
+            );
+
+        const declineButtons =
+            document.querySelectorAll(
+                ".reject-btn"
+            );
+
+
+        approveButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        const confirmed =
+                            confirm(
+                                "Are you sure you want to approve this password reset request and unlock the account?"
+                            );
+
+                        if (!confirmed) {
+
+                            event.preventDefault();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        declineButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        const confirmed =
+                            confirm(
+                                "Are you sure you want to decline this password reset request?"
+                            );
+
+                        if (!confirmed) {
+
+                            event.preventDefault();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

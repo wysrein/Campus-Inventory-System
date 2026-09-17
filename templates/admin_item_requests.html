@@ -1,0 +1,425 @@
+
+{% extends "base.html" %}
+
+{% block title %}Item Requests - Campus Hardware Inventory{% endblock %}
+
+{% block content %}
+
+<div class="student-layout admin-borrows-layout">
+
+    <!-- ADMIN SIDEBAR -->
+    <aside class="student-sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-title">
+                CAMPUS<br>
+                HARDWARE
+            </div>
+            <div class="sidebar-brand-subtitle">
+                Laboratory Inventory
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+                <span class="sidebar-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('admin_equipment') }}" class="sidebar-link">
+                <span class="sidebar-icon">▤</span>
+                <span>Equipments</span>
+            </a>
+
+            <a href="{{ url_for('admin_borrows') }}" class="sidebar-link">
+                <span class="sidebar-icon">▥</span>
+                <span>Borrows / Return</span>
+            </a>
+
+            <a href="{{ url_for('queue_holds_manager') }}" class="sidebar-link">
+                <span class="sidebar-icon">◷</span>
+                <span>Queue &amp; Holds Manager</span>
+            </a>
+
+            <a href="{{ url_for('admin_item_requests') }}" class="sidebar-link active">
+                <span class="sidebar-icon">▤</span>
+                <span>Item Requests</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('admin_approvals') }}" class="sidebar-account">
+                Admin Approvals
+            </a>
+            <a href="{{ url_for('logout') }}" class="sidebar-logout">
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="student-main">
+
+        <section class="student-content">
+
+            <div class="student-panel admin-borrows-panel">
+
+                <!-- PANEL HEADER -->
+                <div class="panel-header">
+                    <div>
+                        <h2>Item Requests</h2>
+                        <p>Select requests below, fill in quantity and unit price, then approve or decline.</p>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ url_for('admin_item_requests') }}" id="item-requests-form">
+
+                    <!-- TABLE -->
+                    <div class="table-wrapper">
+                        <table class="equipment-table">
+
+                            <thead>
+                                <tr>
+                                    <th style="width:44px; text-align:center;">
+                                        <input
+                                            type="checkbox"
+                                            id="select-all"
+                                            title="Select all"
+                                            style="width:16px;height:16px;accent-color:#f4c300;cursor:pointer;"
+                                        >
+                                    </th>
+                                    <th>Student</th>
+                                    <th>Item Name</th>
+                                    <th>Category</th>
+                                    <th>Qty Requested</th>
+                                    <th>Status</th>
+                                    <th>Requested Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% if item_requests %}
+
+                                    {% for req in item_requests %}
+                                    <tr class="ir-row" style="cursor:pointer; transition:background 0.15s;">
+
+                                        <td style="text-align:center;">
+                                            <input
+                                                type="checkbox"
+                                                name="request_ids"
+                                                value="{{ req.id }}"
+                                                class="ir-checkbox"
+                                                style="width:16px;height:16px;accent-color:#002D72;cursor:pointer;"
+                                            >
+                                        </td>
+
+                                        <td>{{ req.username }}</td>
+                                        <td><strong>{{ req.item_name }}</strong></td>
+                                        <td>{{ req.category }}</td>
+                                        <td>{{ req.quantity }}</td>
+
+                                        <td>
+                                            {% if req.status == 'Pending' %}
+                                                <span class="status-badge status-low-stock">Pending</span>
+                                            {% elif req.status == 'Approved' %}
+                                                <span class="status-badge status-in-stock">Approved</span>
+                                            {% elif req.status == 'Rejected' %}
+                                                <span class="status-badge status-out-of-stock">Rejected</span>
+                                            {% else %}
+                                                <span class="status-badge">{{ req.status }}</span>
+                                            {% endif %}
+                                        </td>
+
+                                        <td>{{ req.request_date }}</td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <tr>
+                                        <td colspan="7" style="text-align:center;padding:30px;color:#64748b;">
+                                            No item requests found.
+                                        </td>
+                                    </tr>
+
+                                {% endif %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                    <!-- ACTION BAR -->
+                    <div class="ir-action-bar">
+
+                        <!-- SELECTED COUNT -->
+                        <span class="ir-selected-label" id="selected-count">0 selected</span>
+
+                        <div class="ir-divider"></div>
+
+                        <!-- QTY -->
+                        <label class="ir-field-label" for="approve-qty">Qty:</label>
+                        <input
+                            type="number"
+                            id="approve-qty"
+                            name="approve_qty"
+                            class="ir-field-input"
+                            min="1"
+                            step="1"
+                            placeholder="e.g. 5"
+                        >
+
+                        <!-- UNIT PRICE -->
+                        <label class="ir-field-label" for="unit-price">Unit Price (₱):</label>
+                        <input
+                            type="number"
+                            id="unit-price"
+                            name="unit_price"
+                            class="ir-field-input"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 250.00"
+                        >
+
+                        <!-- APPROVE BUTTON -->
+                        <button
+                            type="submit"
+                            name="action"
+                            value="approve"
+                            class="ir-btn ir-btn-approve"
+                        >
+                            ✓&nbsp; Approve &amp; Add to Inventory
+                        </button>
+
+                        <!-- DECLINE BUTTON -->
+                        <button
+                            type="submit"
+                            name="action"
+                            value="decline"
+                            class="ir-btn ir-btn-decline"
+                        >
+                            ✕&nbsp; Decline Request
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<style>
+
+/* =============================================
+   ACTION BAR
+   ============================================= */
+
+.ir-action-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.ir-selected-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.ir-divider {
+    width: 1px;
+    height: 28px;
+    background: #d1d5db;
+    margin: 0 4px;
+}
+
+.ir-field-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #002D72;
+    white-space: nowrap;
+}
+
+.ir-field-input {
+    width: 110px;
+    padding: 8px 10px;
+    border: 1px solid #c8d4e2;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #172B4D;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ir-field-input:focus {
+    border-color: #002D72;
+    box-shadow: 0 0 0 3px rgba(0, 45, 114, 0.10);
+}
+
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+
+.ir-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.ir-btn:hover  { transform: translateY(-2px); }
+.ir-btn:active { transform: translateY(0); }
+
+/* Approve — NU green */
+.ir-btn-approve {
+    background: #16a34a;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.28);
+}
+.ir-btn-approve:hover {
+    background: #15803d;
+    box-shadow: 0 5px 14px rgba(22, 163, 74, 0.38);
+}
+
+/* Decline — red */
+.ir-btn-decline {
+    background: #dc2626;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(220, 38, 38, 0.28);
+}
+.ir-btn-decline:hover {
+    background: #b91c1c;
+    box-shadow: 0 5px 14px rgba(220, 38, 38, 0.38);
+}
+
+
+/* =============================================
+   ROW SELECTED HIGHLIGHT
+   ============================================= */
+
+.ir-row.row-selected td {
+    background: #EAF1FA !important;
+}
+
+</style>
+
+
+<script>
+
+/* =============================================
+   SELECT ALL
+   ============================================= */
+
+const selectAll  = document.getElementById('select-all');
+const checkboxes = document.querySelectorAll('.ir-checkbox');
+const countLabel = document.getElementById('selected-count');
+
+function updateCount() {
+    const n = document.querySelectorAll('.ir-checkbox:checked').length;
+    countLabel.textContent = n + ' selected';
+}
+
+selectAll.addEventListener('change', function () {
+    checkboxes.forEach(function (cb) {
+        cb.checked = selectAll.checked;
+        cb.closest('tr').classList.toggle('row-selected', selectAll.checked);
+    });
+    updateCount();
+});
+
+checkboxes.forEach(function (cb) {
+    cb.addEventListener('change', function () {
+        cb.closest('tr').classList.toggle('row-selected', cb.checked);
+        const total   = checkboxes.length;
+        const checked = document.querySelectorAll('.ir-checkbox:checked').length;
+        selectAll.indeterminate = checked > 0 && checked < total;
+        selectAll.checked       = checked === total;
+        updateCount();
+    });
+});
+
+
+/* =============================================
+   ROW CLICK TOGGLES CHECKBOX
+   ============================================= */
+
+document.querySelectorAll('.ir-row').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+        if (e.target.type === 'checkbox') return;
+        const cb = row.querySelector('.ir-checkbox');
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event('change'));
+    });
+});
+
+
+/* =============================================
+   SUBMIT VALIDATION
+   ============================================= */
+
+document.getElementById('item-requests-form').addEventListener('submit', function (e) {
+    const checked   = document.querySelectorAll('.ir-checkbox:checked').length;
+    const action    = e.submitter ? e.submitter.value : '';
+    const qty       = document.getElementById('approve-qty').value.trim();
+    const unitPrice = document.getElementById('unit-price').value.trim();
+
+    if (checked === 0) {
+        e.preventDefault();
+        alert('Please select at least one request.');
+        return;
+    }
+
+    if (action === 'approve') {
+        if (!qty || Number(qty) < 1) {
+            e.preventDefault();
+            alert('Please enter a valid quantity before approving.');
+            return;
+        }
+        if (!unitPrice || Number(unitPrice) < 0) {
+            e.preventDefault();
+            alert('Please enter a valid unit price before approving.');
+            return;
+        }
+        if (!confirm('Approve ' + checked + ' request(s) and add to inventory?')) {
+            e.preventDefault();
+        }
+    } else if (action === 'decline') {
+        if (!confirm('Decline ' + checked + ' request(s)?')) {
+            e.preventDefault();
+        }
+    }
+});
+
+</script>
+
+{% endblock %}

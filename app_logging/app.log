@@ -15907,3 +15907,288 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 2026-09-17 07:43:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 07:43:19] "GET /static/style.css HTTP/1.1" 200 -
 2026-09-17 07:43:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 07:43:19] "GET /static/script.js HTTP/1.1" 304 -
 2026-09-17 07:45:18 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:39:03 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:39:03 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 09:39:03 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 09:39:03 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 09:39:03 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:39:03 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 09:39:03 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 09:39:16 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:16] "GET / HTTP/1.1" 302 -
+2026-09-17 09:39:16 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:16] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 09:39:16 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:16] "GET /static/script.js HTTP/1.1" 200 -
+2026-09-17 09:39:16 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:16] "GET /static/style.css HTTP/1.1" 200 -
+2026-09-17 09:39:16 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:16] "GET /favicon.ico HTTP/1.1" 404 -
+2026-09-17 09:39:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:19] "GET /login HTTP/1.1" 200 -
+2026-09-17 09:39:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:19] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:39:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:19] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:39:35 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:35] "POST /login HTTP/1.1" 200 -
+2026-09-17 09:39:35 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:35] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:39:35 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:35] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:39:42 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:42] "GET / HTTP/1.1" 302 -
+2026-09-17 09:39:42 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:42] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 09:39:42 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:42] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:39:42 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:42] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:39:43 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:43] "GET /register HTTP/1.1" 200 -
+2026-09-17 09:39:43 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:43] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:39:43 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:39:43] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:40:27 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:27] "POST /register HTTP/1.1" 200 -
+2026-09-17 09:40:27 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:27] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:40:27 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:27] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:40:53 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:53] "POST /register HTTP/1.1" 302 -
+2026-09-17 09:40:53 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:53] "GET /login HTTP/1.1" 200 -
+2026-09-17 09:40:53 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:53] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:40:53 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:53] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:40:57 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:57] "POST /login HTTP/1.1" 302 -
+2026-09-17 09:40:57 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:57] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 09:40:57 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:57] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:40:57 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:40:57] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:13] "GET /catalog HTTP/1.1" 200 -
+2026-09-17 09:41:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:13] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:13] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:24] "GET /logout HTTP/1.1" 302 -
+2026-09-17 09:41:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:24] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 09:41:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:24] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:24] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:25] "GET /admin/login HTTP/1.1" 200 -
+2026-09-17 09:41:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:25] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:25] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:34 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:34] "POST /admin/login HTTP/1.1" 302 -
+2026-09-17 09:41:34 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:34] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 09:41:34 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:34] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:34 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:34] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /admin/queue-holds-manager HTTP/1.1" 200 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /admin/borrows HTTP/1.1" 200 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:36 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:36] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:41:37 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:37] "GET /admin/equipment HTTP/1.1" 200 -
+2026-09-17 09:41:37 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:37] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:41:37 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:41:37] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:45:39 - [INFO] - werkzeug -  * Detected change in 'C:\\Users\\bagui\\OneDrive - National University\\Software-Lab\\LaboratorySystem_Lab\\migrate_sqlite_to_postgresql.py', reloading
+2026-09-17 09:45:39 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 09:45:40 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:45:40 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 09:45:40 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 09:45:48 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:45:48 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 09:45:48 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 09:45:48 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 09:45:48 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 09:45:48 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 09:45:48 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 09:45:58 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:45:58] "GET /admin/equipment HTTP/1.1" 200 -
+2026-09-17 09:45:59 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:45:59] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:45:59 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:45:59] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:59:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:24] "GET /admin/equipment HTTP/1.1" 200 -
+2026-09-17 09:59:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:24] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:59:24 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:24] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 09:59:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:25] "GET /admin/equipment HTTP/1.1" 200 -
+2026-09-17 09:59:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:25] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 09:59:25 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 09:59:25] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:04:07 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:07] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 10:04:07 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:07] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:04:07 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:07] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:04:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:13] "GET /logout HTTP/1.1" 302 -
+2026-09-17 10:04:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:13] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 10:04:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:13] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:04:13 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:13] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:04:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:14] "GET /login HTTP/1.1" 200 -
+2026-09-17 10:04:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:14] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:04:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:14] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:04:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:17] "POST /login HTTP/1.1" 302 -
+2026-09-17 10:04:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:17] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 10:04:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:17] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:04:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:04:17] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:12:38 - [INFO] - werkzeug -  * Detected change in 'C:\\Users\\bagui\\OneDrive - National University\\Software-Lab\\LaboratorySystem_Lab\\laboratorysystem.py', reloading
+2026-09-17 10:12:38 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:12:39 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:12:53 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:12:53 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 10:12:53 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 10:12:53 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:12:53 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:12:53 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:12:53 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:12:58 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:12:58] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 10:12:58 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:12:58] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:12:58 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:12:58] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:13:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:13:17] "GET /dashboard HTTP/1.1" 200 -
+2026-09-17 10:13:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:13:17] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:13:17 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:13:17] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:13:55 - [INFO] - werkzeug -  * Detected change in 'C:\\Users\\bagui\\OneDrive - National University\\Software-Lab\\LaboratorySystem_Lab\\laboratorysystem.py', reloading
+2026-09-17 10:13:55 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:13:55 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:13:55 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:13:55 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:14:07 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:14:07 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 10:14:07 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 10:14:07 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:14:08 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:14:08 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:14:08 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:14:18 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:18] "GET /logout HTTP/1.1" 302 -
+2026-09-17 10:14:18 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:18] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 10:14:18 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:18] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:14:18 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:18] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:14:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:19] "GET /login HTTP/1.1" 200 -
+2026-09-17 10:14:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:19] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:14:19 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:19] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:14:22 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:22] "GET / HTTP/1.1" 302 -
+2026-09-17 10:14:22 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:22] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 10:14:22 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:22] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:14:22 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:22] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:14:23 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:23] "GET /register HTTP/1.1" 200 -
+2026-09-17 10:14:23 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:23] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:14:23 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:23] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:14:54 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:54] "POST /register HTTP/1.1" 302 -
+2026-09-17 10:14:54 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:54] "GET /login HTTP/1.1" 200 -
+2026-09-17 10:14:54 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:54] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:14:54 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:14:54] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:15:06 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:15:06] "GET / HTTP/1.1" 302 -
+2026-09-17 10:15:06 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:15:06] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 10:15:06 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:15:06] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:15:06 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:15:06] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:18:10 - [INFO] - werkzeug -  * Detected change in 'C:\\Users\\bagui\\OneDrive - National University\\Software-Lab\\LaboratorySystem_Lab\\sync_to_supabase.py', reloading
+2026-09-17 10:18:11 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:18:11 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:18:11 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:18:11 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:18:31 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:18:31 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 10:18:31 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 10:18:31 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:18:31 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:18:31 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:18:31 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:19:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:14] "GET /admin/register HTTP/1.1" 200 -
+2026-09-17 10:19:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:14] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:19:14 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:14] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:19:50 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:50] "POST /admin/register HTTP/1.1" 302 -
+2026-09-17 10:19:50 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:50] "GET /admin/login HTTP/1.1" 200 -
+2026-09-17 10:19:50 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:50] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:19:50 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:19:50] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:24:50 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:24:50 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 10:24:50 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 10:24:50 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:24:50 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:24:50 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:24:50 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:31:49 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:31:49 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-17 10:31:49 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-17 10:31:49 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-17 10:31:49 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-17 10:31:49 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-17 10:31:49 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-17 10:32:02 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:02] "GET /admin/login HTTP/1.1" 200 -
+2026-09-17 10:32:02 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:02] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:32:02 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:02] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-17 10:32:03 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:03] "GET / HTTP/1.1" 302 -
+2026-09-17 10:32:03 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:03] "GET /account-type HTTP/1.1" 200 -
+2026-09-17 10:32:03 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:03] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-17 10:32:03 - [INFO] - werkzeug - 127.0.0.1 - - [17/Sep/2026 10:32:03] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:03:14 - [WARNING] - InventoryApp - SUPABASE_DB_URL is not set; automatic Supabase sync skipped.
+2026-09-18 09:03:14 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:03:14 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 09:03:14 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 09:03:14 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 09:03:15 - [WARNING] - InventoryApp - SUPABASE_DB_URL is not set; automatic Supabase sync skipped.
+2026-09-18 09:03:15 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:03:15 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 09:03:15 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 09:03:21 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:21] "GET / HTTP/1.1" 302 -
+2026-09-18 09:03:21 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:21] "GET /account-type HTTP/1.1" 200 -
+2026-09-18 09:03:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:22] "GET /static/style.css HTTP/1.1" 200 -
+2026-09-18 09:03:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:22] "GET /static/script.js HTTP/1.1" 200 -
+2026-09-18 09:03:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:22] "GET /favicon.ico HTTP/1.1" 404 -
+2026-09-18 09:03:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:25] "GET /login HTTP/1.1" 200 -
+2026-09-18 09:03:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:25] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:03:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:25] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:03:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:26] "GET / HTTP/1.1" 302 -
+2026-09-18 09:03:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:26] "GET /account-type HTTP/1.1" 200 -
+2026-09-18 09:03:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:26] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:03:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:26] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:03:27 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:27] "GET /register HTTP/1.1" 200 -
+2026-09-18 09:03:27 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:27] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:03:27 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:03:27] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:04:25 - [WARNING] - InventoryApp - SUPABASE_DB_URL is not set; automatic Supabase sync skipped.
+2026-09-18 09:04:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:04:25] "POST /register HTTP/1.1" 302 -
+2026-09-18 09:04:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:04:25] "GET /login HTTP/1.1" 200 -
+2026-09-18 09:04:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:04:25] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:04:25 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:04:25] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:24:15 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:24:17 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:24:17 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:24:17 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 09:24:17 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 09:24:17 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 09:24:19 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:24:21 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:24:21 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:24:21 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 09:24:21 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 09:24:21 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:21] "GET /login HTTP/1.1" 200 -
+2026-09-18 09:24:21 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:21] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:24:21 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:21] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:24:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:22] "GET / HTTP/1.1" 302 -
+2026-09-18 09:24:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:22] "GET /account-type HTTP/1.1" 200 -
+2026-09-18 09:24:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:22] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:24:22 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:22] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:24:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:26] "GET /register HTTP/1.1" 200 -
+2026-09-18 09:24:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:26] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:24:26 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:24:26] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:24:58 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:25:00 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:25:00 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:25:00] "POST /register HTTP/1.1" 302 -
+2026-09-18 09:25:00 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:25:00] "GET /login HTTP/1.1" 200 -
+2026-09-18 09:25:00 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:25:00] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 09:25:00 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 09:25:00] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 09:30:04 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:30:06 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:30:06 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:30:06 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 09:30:06 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 09:30:06 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 09:30:07 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:30:09 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:30:09 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:30:09 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 09:30:09 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 09:31:05 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:31:07 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:31:07 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:31:07 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 09:31:07 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 09:31:07 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 09:31:09 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:31:11 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:31:11 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 09:31:11 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 09:31:11 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 09:35:18 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:35:20 - [ERROR] - InventoryApp - Automatic SQLite -> Supabase sync failed: invalid input syntax for type bigint: "2021-003211"
+CONTEXT:  unnamed portal parameter $16 = '...'
+2026-09-18 09:42:18 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 09:42:21 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.

@@ -7,7 +7,8 @@ from laboratorysystem import (
     init_db,
     AuthController,
     InventoryController,
-    DB_NAME
+    DB_NAME,
+    sync_sqlite_to_supabase
 )
 
 
@@ -785,6 +786,7 @@ def queue_holds_manager():
                 """, (hold_id,))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             flash("Selected hold(s) are ready for pickup.", "success")
@@ -886,6 +888,7 @@ def queue_holds_manager():
                     """, (hold_id,))
 
                 conn.commit()
+                sync_sqlite_to_supabase()
 
                 conn.close()
 
@@ -1195,6 +1198,7 @@ def admin_return_item():
         ))
 
         conn.commit()
+        sync_sqlite_to_supabase()
         conn.close()
 
         flash("Item returned successfully.", "success")
@@ -1539,6 +1543,7 @@ def request_history():
                 quantity
             ))
             conn.commit()
+            sync_sqlite_to_supabase()
             flash("Item request submitted successfully.", "success")
 
         except ValueError:

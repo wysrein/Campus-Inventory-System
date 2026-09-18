@@ -4,6 +4,8 @@ import csv
 import re
 import sqlite3
 import logging
+import psycopg
+from psycopg import sql
 try:
     import tkinter as tk
     from tkinter import messagebox, ttk
@@ -16,6 +18,11 @@ except ImportError:
 
 import bcrypt
 from pydantic import BaseModel, Field, ValidationError, field_validator
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL")
 
 # 1. AUDIT LOGGING SETUP
 
@@ -37,6 +44,108 @@ logger = setup_logger()
 # 2. DATABASE INITIALIZATION
 
 DB_NAME = "hardware_inventory.db"
+
+# Supabase PostgreSQL connection used for automatic SQLite -> Supabase syncing.
+SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL", "").strip()
+
+SYNC_TABLES = [
+    "users", "hardware", "borrow_requests", "item_requests",
+    "item_holds", "borrow_transactions", "password_resets", "return_requests"
+]
+
+def sync_sqlite_to_supabase():
+    """Mirror committed local SQLite data to Supabase. SQLite remains the source of truth."""
+    if not SUPABASE_DB_URL:
+        logger.warning("SUPABASE_DB_URL is not set; automatic Supabase sync skipped.")
+        return False
+
+    sqlite_conn = None
+    pg_conn = None
+    try:
+        sqlite_conn = sqlite3.connect(DB_NAME)
+        sqlite_cur = sqlite_conn.cursor()
+        pg_conn = psycopg.connect(SUPABASE_DB_URL, sslmode="require")
+        pg_cur = pg_conn.cursor()
+
+        # Child tables first for deletes, so FK relationships are less likely to block cleanup.
+        tables_for_sync = [
+            "borrow_transactions", "return_requests", "borrow_requests",
+            "item_holds", "item_requests", "password_resets", "hardware", "users"
+        ]
+
+        for table_name in tables_for_sync:
+            sqlite_cur.execute(f"PRAGMA table_info('{table_name}')")
+            columns_info = sqlite_cur.fetchall()
+            if not columns_info:
+                continue
+
+            columns = [c[1] for c in columns_info]
+            pk_columns = [c[1] for c in columns_info if c[5]]
+            if not pk_columns:
+                continue
+
+            pg_cur.execute(
+                "SELECT EXISTS (SELECT 1 FROM information_schema.tables "
+                "WHERE table_schema = 'public' AND table_name = %s)",
+                (table_name,)
+            )
+            if not pg_cur.fetchone()[0]:
+                logger.warning("Supabase table '%s' does not exist; skipping it.", table_name)
+                continue
+
+            sqlite_cur.execute(f"SELECT * FROM {table_name}")
+            rows = sqlite_cur.fetchall()
+
+            col_sql = sql.SQL(", ").join(sql.Identifier(c) for c in columns)
+            placeholders = sql.SQL(", ").join(sql.Placeholder() for _ in columns)
+            pk_sql = sql.SQL(", ").join(sql.Identifier(c) for c in pk_columns)
+            updates = [c for c in columns if c not in pk_columns]
+
+            if updates:
+                update_sql = sql.SQL(", ").join(
+                    sql.SQL("{c} = EXCLUDED.{c}").format(c=sql.Identifier(c))
+                    for c in updates
+                )
+                stmt = sql.SQL(
+                    "INSERT INTO {t} ({cols}) VALUES ({vals}) "
+                    "ON CONFLICT ({pk}) DO UPDATE SET {updates}"
+                ).format(t=sql.Identifier(table_name), cols=col_sql, vals=placeholders, pk=pk_sql, updates=update_sql)
+            else:
+                stmt = sql.SQL(
+                    "INSERT INTO {t} ({cols}) VALUES ({vals}) ON CONFLICT ({pk}) DO NOTHING"
+                ).format(t=sql.Identifier(table_name), cols=col_sql, vals=placeholders, pk=pk_sql)
+
+            if rows:
+                pg_cur.executemany(stmt, rows)
+
+            # Remove rows that no longer exist locally.
+            pg_cur.execute(sql.SQL("SELECT {pk} FROM {t}").format(pk=pk_sql, t=sql.Identifier(table_name)))
+            remote_keys = {tuple(r) for r in pg_cur.fetchall()}
+            local_keys = {tuple(row[columns.index(pk)] for pk in pk_columns) for row in rows}
+            stale_keys = remote_keys - local_keys
+            if stale_keys:
+                where_sql = sql.SQL(" AND ").join(
+                    sql.SQL("{c} = {p}").format(c=sql.Identifier(pk), p=sql.Placeholder())
+                    for pk in pk_columns
+                )
+                delete_stmt = sql.SQL("DELETE FROM {t} WHERE {where}").format(
+                    t=sql.Identifier(table_name), where=where_sql
+                )
+                pg_cur.executemany(delete_stmt, list(stale_keys))
+
+        pg_conn.commit()
+        logger.info("SQLite changes synced to Supabase successfully.")
+        return True
+    except Exception as e:
+        if pg_conn:
+            try: pg_conn.rollback()
+            except Exception: pass
+        logger.error("Automatic SQLite -> Supabase sync failed: %s", e)
+        return False
+    finally:
+        if sqlite_conn: sqlite_conn.close()
+        if pg_conn: pg_conn.close()
+
 
 def init_db():
     try:
@@ -232,6 +341,7 @@ def init_db():
             cursor.execute("ALTER TABLE password_resets ADD COLUMN status TEXT DEFAULT 'Pending'")
 
         conn.commit()
+        sync_sqlite_to_supabase()
         conn.close()
         logger.info("Hardware Inventory database initialized successfully.")
     except sqlite3.Error as e:
@@ -367,6 +477,7 @@ class AuthController:
                 )
             )
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
             return True, "Registration successful! You may now log in."
         except sqlite3.IntegrityError:
@@ -447,6 +558,7 @@ class AuthController:
             )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, "Lab Technician account created successfully."
@@ -479,6 +591,7 @@ class AuthController:
         if bcrypt.checkpw(password.encode('utf-8'), stored_hash.encode('utf-8')):
             cursor.execute("UPDATE users SET failed_attempts = 0 WHERE id = ?", (user_id,))
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
             return True, "Login successful!"
         else:
@@ -486,11 +599,13 @@ class AuthController:
             if failed_attempts >= 3:
                 cursor.execute("UPDATE users SET failed_attempts = ?, is_locked = 1 WHERE id = ?", (failed_attempts, user_id))
                 conn.commit()
+                sync_sqlite_to_supabase()
                 conn.close()
                 return False, "ACCOUNT_LOCKED"
             else:
                 cursor.execute("UPDATE users SET failed_attempts = ? WHERE id = ?", (failed_attempts, user_id))
                 conn.commit()
+                sync_sqlite_to_supabase()
                 conn.close()
                 remaining_tries = 3 - failed_attempts
                 return False, f"Invalid username or password. {remaining_tries} attempt(s) remaining before lockout."
@@ -556,6 +671,7 @@ class AuthController:
             ))
 
             conn.commit()
+            sync_sqlite_to_supabase()
 
             return (
                 True,
@@ -678,6 +794,7 @@ class AuthController:
                 )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return (
@@ -720,6 +837,7 @@ class AuthController:
                 )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return (
@@ -759,6 +877,7 @@ class AuthController:
                 )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return (
@@ -820,6 +939,7 @@ class AuthController:
         new_hashed_pw = bcrypt.hashpw(new_pass.encode('utf-8'), bcrypt.gensalt())
         cursor.execute("UPDATE users SET password_hash = ? WHERE id = ?", (new_hashed_pw.decode('utf-8'), user_id))
         conn.commit()
+        sync_sqlite_to_supabase()
         conn.close()
         return True, "Password updated successfully! Please log in with your new password."
 
@@ -899,6 +1019,7 @@ class InventoryController:
             )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return "added", "New hardware component added successfully!"
@@ -972,6 +1093,7 @@ class InventoryController:
             )
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return "updated", "Hardware record updated successfully!"
@@ -985,6 +1107,7 @@ class InventoryController:
             cursor = conn.cursor()
             cursor.executemany("DELETE FROM hardware WHERE item_id = ?", [(i,) for i in item_ids])
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
             return True, f"Successfully deleted {len(item_ids)} item(s)."
         except sqlite3.Error:
@@ -1181,6 +1304,7 @@ class InventoryController:
             ))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, (
@@ -1259,6 +1383,7 @@ class InventoryController:
             ))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, (
@@ -1352,6 +1477,7 @@ class InventoryController:
             ))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, "Item request approved and added to inventory."
@@ -1377,6 +1503,7 @@ class InventoryController:
                 return False, "Only pending item requests can be rejected."
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, "Item request rejected."
@@ -1447,6 +1574,7 @@ class InventoryController:
             """, (request_id,))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, (
@@ -1474,6 +1602,7 @@ class InventoryController:
                     return False, "Borrow request not found or already processed."
 
                 conn.commit()
+                sync_sqlite_to_supabase()
                 conn.close()
 
                 return True, "Borrow request rejected."
@@ -1520,6 +1649,7 @@ class InventoryController:
                 """, (quantity, borrow_request_id))
 
                 conn.commit()
+                sync_sqlite_to_supabase()
                 conn.close()
 
                 return True, "Return request submitted successfully."
@@ -1580,6 +1710,7 @@ class InventoryController:
             """, (request_id,))
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, (
@@ -1607,6 +1738,7 @@ class InventoryController:
                 return False, "Return request not found or already processed."
 
             conn.commit()
+            sync_sqlite_to_supabase()
             conn.close()
 
             return True, "Return request rejected."
@@ -1795,6 +1927,7 @@ class AdminApprovalsFrame(tk.Frame):
         cursor.execute("UPDATE users SET is_locked = 0, failed_attempts = 0, password_hash = ? WHERE username = ?", (default_hash, username))
         cursor.execute("UPDATE password_resets SET status = 'Approved' WHERE id = ?", (req_id,))
         conn.commit()
+        sync_sqlite_to_supabase()
         conn.close()
 
         messagebox.showinfo("Success", f"Request approved for '{username}'. Account has been unlocked with temporary password: Password123!")
@@ -1812,6 +1945,7 @@ class AdminApprovalsFrame(tk.Frame):
         cursor = conn.cursor()
         cursor.execute("UPDATE password_resets SET status = 'Rejected' WHERE id = ?", (req_id,))
         conn.commit()
+        sync_sqlite_to_supabase()
         conn.close()
 
         messagebox.showinfo("Success", "Password reset request rejected.")

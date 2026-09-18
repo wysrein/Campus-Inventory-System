@@ -4,15 +4,8 @@ import csv
 import re
 import sqlite3
 import logging
-try:
-    import tkinter as tk
-    from tkinter import messagebox, ttk
-    TKINTER_AVAILABLE = True
-except ImportError:
-    tk = None
-    messagebox = None
-    ttk = None
-    TKINTER_AVAILABLE = False
+import tkinter as tk
+from tkinter import ttk, messagebox
 
 import bcrypt
 from pydantic import BaseModel, Field, ValidationError, field_validator

@@ -16,6 +16,15 @@ except ImportError:
     ttk = None
     TKINTER_AVAILABLE = False
 
+if not TKINTER_AVAILABLE:
+    class _DummyTk:
+        class Frame:
+            pass
+        class Tk:
+            pass
+
+    tk = _DummyTk()
+
 import bcrypt
 from pydantic import BaseModel, Field, ValidationError, field_validator
 from dotenv import load_dotenv

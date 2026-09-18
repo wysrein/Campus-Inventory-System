@@ -1533,7 +1533,7 @@ def request_history():
                     category,
                     quantity,
                     status,
-                    request_date
+                    requested_at
                 )
                 VALUES (?, ?, ?, ?, 'Pending', datetime('now', 'localtime'))
             """, (
@@ -1553,10 +1553,10 @@ def request_history():
         return redirect(url_for("request_history"))
 
     cursor.execute("""
-        SELECT item_name, category, quantity, status, request_date AS request_date
+        SELECT item_name, category, quantity, status, requested_at AS request_date
         FROM item_requests
         WHERE username = ?
-        ORDER BY request_date ASC
+        ORDER BY requested_at ASC
     """, (session["username"],))
 
     rows = cursor.fetchall()

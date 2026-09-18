@@ -1078,7 +1078,7 @@ def admin_item_requests():
             category,
             quantity,
             status,
-            request_date,
+            requested_at,
             unit_price
         FROM item_requests
         ORDER BY rowid ASC

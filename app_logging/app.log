@@ -1,0 +1,68 @@
+2026-09-18 10:31:36 - [WARNING] - InventoryApp - SUPABASE_DB_URL is not set; automatic Supabase sync skipped.
+2026-09-18 10:31:36 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:31:36 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 10:31:36 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 10:31:36 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 10:31:36 - [WARNING] - InventoryApp - SUPABASE_DB_URL is not set; automatic Supabase sync skipped.
+2026-09-18 10:31:36 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:31:36 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 10:31:36 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 10:35:58 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:36:00 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:36:00 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:36:01 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 10:36:01 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 10:36:01 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 10:36:02 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:36:04 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:36:04 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:36:04 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 10:36:04 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 10:36:24 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:36:24] "GET /account-type HTTP/1.1" 200 -
+2026-09-18 10:36:24 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:36:24] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:36:24 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:36:24] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:44:55 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:44:57 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:44:57 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:44:57 - [INFO] - werkzeug - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-09-18 10:44:57 - [INFO] - werkzeug - Press CTRL+C to quit
+2026-09-18 10:44:57 - [INFO] - werkzeug -  * Restarting with stat
+2026-09-18 10:44:59 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:45:01 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:45:01 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:45:01 - [WARNING] - werkzeug -  * Debugger is active!
+2026-09-18 10:45:01 - [INFO] - werkzeug -  * Debugger PIN: 167-196-506
+2026-09-18 10:45:01 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:01] "GET /admin/login HTTP/1.1" 200 -
+2026-09-18 10:45:01 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:01] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:45:01 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:01] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:45:04 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:04] "GET / HTTP/1.1" 302 -
+2026-09-18 10:45:04 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:04] "GET /account-type HTTP/1.1" 200 -
+2026-09-18 10:45:04 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:04] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:45:04 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:04] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:45:05 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:05] "GET /login HTTP/1.1" 200 -
+2026-09-18 10:45:05 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:05] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:45:05 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:05] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:45:08 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:45:10 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:45:10 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:10] "POST /login HTTP/1.1" 302 -
+2026-09-18 10:45:10 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:10] "GET /dashboard HTTP/1.1" 200 -
+2026-09-18 10:45:10 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:10] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:45:10 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:10] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:45:11 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:11] "GET /catalog HTTP/1.1" 200 -
+2026-09-18 10:45:11 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:11] "GET /static/style.css HTTP/1.1" 304 -
+2026-09-18 10:45:11 - [INFO] - werkzeug - 127.0.0.1 - - [18/Sep/2026 10:45:11] "GET /static/script.js HTTP/1.1" 304 -
+2026-09-18 10:54:26 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:54:29 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:54:29 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 10:58:27 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 10:58:29 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 10:58:29 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 11:13:17 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 11:13:19 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 11:13:19 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.
+2026-09-18 11:14:04 - [WARNING] - InventoryApp - Supabase table 'return_requests' does not exist; skipping it.
+2026-09-18 11:14:06 - [INFO] - InventoryApp - SQLite changes synced to Supabase successfully.
+2026-09-18 11:14:06 - [INFO] - InventoryApp - Hardware Inventory database initialized successfully.

@@ -155,6 +155,201 @@ def sync_sqlite_to_supabase():
         if sqlite_conn: sqlite_conn.close()
         if pg_conn: pg_conn.close()
 
+def restore_sqlite_from_supabase_if_empty():
+    """Restore a fresh SQLite database from Supabase before syncing back."""
+    if not SUPABASE_DB_URL:
+        logger.warning("SUPABASE_DB_URL is not set; SQLite restore skipped.")
+        return True
+
+    tables = [
+        "users",
+        "hardware",
+        "borrow_requests",
+        "item_requests",
+        "item_holds",
+        "borrow_transactions",
+        "password_resets",
+        "return_requests",
+    ]
+
+    sqlite_conn = None
+    pg_conn = None
+
+    try:
+        sqlite_conn = sqlite3.connect(DB_NAME)
+        sqlite_cur = sqlite_conn.cursor()
+
+        # Only restore when the local SQLite database is completely empty.
+        local_counts = {}
+
+        for table_name in tables:
+            sqlite_cur.execute(
+                f'SELECT COUNT(*) FROM "{table_name}"'
+            )
+            local_counts[table_name] = sqlite_cur.fetchone()[0]
+
+        if any(local_counts.values()):
+            logger.info(
+                "Local SQLite already contains data; Supabase restore skipped."
+            )
+            return True
+
+        logger.info(
+            "Fresh SQLite database detected; restoring data from Supabase."
+        )
+
+        pg_conn = psycopg.connect(
+            SUPABASE_DB_URL,
+            sslmode="require"
+        )
+        pg_cur = pg_conn.cursor()
+
+        for table_name in tables:
+            # Check whether the table exists in Supabase.
+            pg_cur.execute("""
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM information_schema.tables
+                    WHERE table_schema = 'public'
+                      AND table_name = %s
+                )
+            """, (table_name,))
+
+            if not pg_cur.fetchone()[0]:
+                logger.warning(
+                    "Supabase table '%s' does not exist; skipping.",
+                    table_name
+                )
+                continue
+
+            # Get local SQLite columns.
+            sqlite_cur.execute(
+                f'PRAGMA table_info("{table_name}")'
+            )
+            local_info = sqlite_cur.fetchall()
+
+            local_columns = [row[1] for row in local_info]
+
+            # Get Supabase columns.
+            pg_cur.execute("""
+                SELECT column_name
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+                  AND table_name = %s
+                ORDER BY ordinal_position
+            """, (table_name,))
+
+            remote_columns = [
+                row[0]
+                for row in pg_cur.fetchall()
+            ]
+
+            # Use only columns that exist in both databases.
+            columns = [
+                column
+                for column in local_columns
+                if column in remote_columns
+            ]
+
+            if not columns:
+                logger.warning(
+                    "No matching columns found for table '%s'; skipping.",
+                    table_name
+                )
+                continue
+
+            # Make sure required SQLite columns are available.
+            missing_required = []
+
+            for row in local_info:
+                column_name = row[1]
+                not_null = row[3]
+                default_value = row[4]
+                primary_key = row[5]
+
+                if (
+                    not primary_key
+                    and not_null
+                    and default_value is None
+                    and column_name not in remote_columns
+                ):
+                    missing_required.append(column_name)
+
+            if missing_required:
+                raise RuntimeError(
+                    f"Cannot restore table '{table_name}'. "
+                    f"Missing required columns: {missing_required}"
+                )
+
+            select_columns = sql.SQL(", ").join(
+                sql.Identifier(column)
+                for column in columns
+            )
+
+            pg_cur.execute(
+                sql.SQL("SELECT {} FROM {}").format(
+                    select_columns,
+                    sql.Identifier(table_name)
+                )
+            )
+
+            rows = pg_cur.fetchall()
+
+            if not rows:
+                continue
+
+            quoted_columns = ", ".join(
+                f'"{column}"'
+                for column in columns
+            )
+
+            placeholders = ", ".join(
+                "?"
+                for _ in columns
+            )
+
+            insert_sql = (
+                f'INSERT INTO "{table_name}" '
+                f'({quoted_columns}) '
+                f'VALUES ({placeholders})'
+            )
+
+            sqlite_cur.executemany(
+                insert_sql,
+                rows
+            )
+
+            logger.info(
+                "Restored %s row(s) into '%s'.",
+                len(rows),
+                table_name
+            )
+
+        sqlite_conn.commit()
+
+        logger.info(
+            "Supabase -> SQLite restore completed successfully."
+        )
+
+        return True
+
+    except Exception as e:
+        if sqlite_conn:
+            sqlite_conn.rollback()
+
+        logger.error(
+            "Supabase -> SQLite restore failed: %s",
+            e
+        )
+
+        return False
+
+    finally:
+        if sqlite_conn:
+            sqlite_conn.close()
+
+        if pg_conn:
+            pg_conn.close()
 
 def init_db():
     try:
@@ -350,8 +545,14 @@ def init_db():
             cursor.execute("ALTER TABLE password_resets ADD COLUMN status TEXT DEFAULT 'Pending'")
 
         conn.commit()
-        sync_sqlite_to_supabase()
         conn.close()
+
+        if restore_sqlite_from_supabase_if_empty():
+            sync_sqlite_to_supabase()
+        else:
+            logger.error(
+                "SQLite restore failed; Supabase sync was skipped for safety."
+            )
         logger.info("Hardware Inventory database initialized successfully.")
     except sqlite3.Error as e:
         logger.error(f"Database initialization error: {e}")

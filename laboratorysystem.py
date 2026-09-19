@@ -150,6 +150,7 @@ def sync_sqlite_to_supabase():
             try: pg_conn.rollback()
             except Exception: pass
         logger.error("Automatic SQLite -> Supabase sync failed: %s", e)
+        print("AUTOMATIC SYNC ERROR:", e, flush=True)
         return False
     finally:
         if sqlite_conn: sqlite_conn.close()

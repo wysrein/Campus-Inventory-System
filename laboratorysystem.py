@@ -179,18 +179,13 @@ def restore_sqlite_from_supabase_if_empty():
         sqlite_conn = sqlite3.connect(DB_NAME)
         sqlite_cur = sqlite_conn.cursor()
 
-        # Only restore when the local SQLite database is completely empty.
-        local_counts = {}
+      # Restore when the local hardware inventory is empty.
+        sqlite_cur.execute('SELECT COUNT(*) FROM "hardware"')
+        local_hardware_count = sqlite_cur.fetchone()[0]
 
-        for table_name in tables:
-            sqlite_cur.execute(
-                f'SELECT COUNT(*) FROM "{table_name}"'
-            )
-            local_counts[table_name] = sqlite_cur.fetchone()[0]
-
-        if any(local_counts.values()):
+        if local_hardware_count > 0:
             logger.info(
-                "Local SQLite already contains data; Supabase restore skipped."
+                "Local SQLite already contains hardware; Supabase restore skipped."
             )
             return True
 
@@ -309,7 +304,7 @@ def restore_sqlite_from_supabase_if_empty():
             )
 
             insert_sql = (
-                f'INSERT INTO "{table_name}" '
+                f'INSERT OR IGNORE INTO "{table_name}" '
                 f'({quoted_columns}) '
                 f'VALUES ({placeholders})'
             )

@@ -415,7 +415,7 @@ def init_db():
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS item_requests (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                request_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL,
                 item_name TEXT NOT NULL,
                 category TEXT NOT NULL,

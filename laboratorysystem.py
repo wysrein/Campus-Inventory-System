@@ -481,7 +481,7 @@ def init_db():
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS item_holds (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                hold_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL,
                 item_id INTEGER NOT NULL,
                 quantity INTEGER NOT NULL,

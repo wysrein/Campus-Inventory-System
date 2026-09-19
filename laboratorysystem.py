@@ -354,7 +354,7 @@ def init_db():
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
-                hold_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL,
